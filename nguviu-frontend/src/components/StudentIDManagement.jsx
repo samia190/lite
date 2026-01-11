@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { get, post } from "../utils/api";
 import QRCode from "qrcode";
+import StudentIDCard from "./StudentIDCard";
 
 export default function StudentIDManagement({ user }) {
   const [students, setStudents] = useState([]);
@@ -8,6 +9,7 @@ export default function StudentIDManagement({ user }) {
   const [selectedStudent, setSelectedStudent] = useState(null);
   const [qrCodeUrl, setQrCodeUrl] = useState("");
   const [showQRModal, setShowQRModal] = useState(false);
+  const [showIDCard, setShowIDCard] = useState(false);
   const [status, setStatus] = useState("");
   const [showAddForm, setShowAddForm] = useState(false);
 
@@ -368,6 +370,24 @@ export default function StudentIDManagement({ user }) {
                 </div>
                 <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
                   <button
+                    onClick={() => {
+                      setSelectedStudent(student);
+                      setShowIDCard(true);
+                    }}
+                    style={{
+                      padding: "10px 20px",
+                      background: "#8b5cf6",
+                      color: "white",
+                      border: "none",
+                      borderRadius: "6px",
+                      fontSize: "14px",
+                      fontWeight: "600",
+                      cursor: "pointer"
+                    }}
+                  >
+                    🪪 View ID Card
+                  </button>
+                  <button
                     onClick={() => generateQRCode(student)}
                     style={{
                       padding: "10px 20px",
@@ -533,6 +553,27 @@ export default function StudentIDManagement({ user }) {
                 Close
               </button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* ID Card Modal */}
+      {showIDCard && selectedStudent && (
+        <div style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: "rgba(0,0,0,0.8)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          zIndex: 1000,
+          padding: "20px"
+        }} onClick={() => setShowIDCard(false)}>
+          <div onClick={(e) => e.stopPropagation()}>
+            <StudentIDCard student={selectedStudent} onClose={() => setShowIDCard(false)} />
           </div>
         </div>
       )}

@@ -19,6 +19,7 @@
     "node": ">=18.18.0"
   },
   "dependencies": {
+    "jsbarcode": "^3.12.3",
     "jspdf": "^4.0.0",
     "jspdf-autotable": "^5.0.7",
     "multer": "^2.0.2",
