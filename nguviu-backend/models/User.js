@@ -12,6 +12,13 @@ const UserSchema = new mongoose.Schema(
     role: { type: String, default: "pending", enum: ["pending","admin","teacher","student","staff","parent","user"] },
     requestedRole: { type: String, default: "user" },
 
+    // Student-specific fields
+    admissionNumber: { type: String, index: true, sparse: true },
+    dateOfBirth: { type: String }, // Format: YYYY-MM-DD
+    phone: { type: String },
+    stream: { type: String },
+    isActive: { type: Boolean, default: true },
+
     resetTokenHash: { type: String },
     resetTokenExpires: { type: Date },
 
