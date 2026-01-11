@@ -7,6 +7,11 @@ services:
     plan: free
     buildCommand: cd nguviu-backend && npm install
     startCommand: cd nguviu-backend && npm start
+    # Persistent disk for images/uploads (CRITICAL for performance)
+    disk:
+      name: nguviu-data
+      mountPath: /opt/render/project/src/nguviu-backend/public
+      sizeGB: 1
     envVars:
       - key: NODE_ENV
         value: production
@@ -40,6 +45,8 @@ services:
         value: 900000
       - key: RATE_LIMIT_MAX
         value: 5
+      - key: FRONTEND_URL
+        sync: false
     healthCheckPath: /api/health
 
   # Frontend Static Site
@@ -52,6 +59,7 @@ services:
     staticPublishPath: nguviu-frontend/dist
     pullRequestPreviewsEnabled: true
     headers:
+      # Security headers
       - path: /*
         name: X-Frame-Options
         value: DENY
@@ -61,6 +69,31 @@ services:
       - path: /*
         name: Referrer-Policy
         value: strict-origin-when-cross-origin
+      # Performance headers
+      - path: /assets/*
+        name: Cache-Control
+        value: public, max-age=31536000, immutable
+      - path: /*.js
+        name: Cache-Control
+        value: public, max-age=31536000, immutable
+      - path: /*.css
+        name: Cache-Control
+        value: public, max-age=31536000, immutable
+      - path: /images/*
+        name: Cache-Control
+        value: public, max-age=31536000, immutable
+      - path: /*.webp
+        name: Cache-Control
+        value: public, max-age=31536000, immutable
+      - path: /*.jpg
+        name: Cache-Control
+        value: public, max-age=31536000, immutable
+      - path: /*.png
+        name: Cache-Control
+        value: public, max-age=31536000, immutable
+      - path: /index.html
+        name: Cache-Control
+        value: public, max-age=0, must-revalidate
     routes:
       - type: rewrite
         source: /*

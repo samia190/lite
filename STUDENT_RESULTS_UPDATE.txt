@@ -1,0 +1,33 @@
+Due to the complexity of the changes needed for the StudentResults component, here's a summary of what needs to be updated:
+
+1. LATEST RESULTS VIEW (Default):
+   - Show the most recent result prominently
+   - Display performance insights panel with:
+     * Performance change from previous term (+/- percentage)
+     * Weak subjects that need focus
+     * Strong subjects to maintain
+     * Improvement suggestions for holidays
+   - Show PDF download OR view uploaded PDF
+   - Button to view results history
+
+2. RESULTS HISTORY VIEW:
+   - Timeline/list of all past results
+   - Each result shows term, year, grade, average
+   - Can download any historical result
+   - Can switch back to latest view
+
+3. PDF HANDLING:
+   - If result has uploadedPdfUrl -> show "View Uploaded PDF" button
+   - If result has subjects array -> show "Download Generated PDF" button
+   - Can show both if admin uploaded PDF and also entered grades
+
+4. PERFORMANCE MONITORING:
+   - Show performance trend graph (optional)
+   - Highlight improvement or decline
+   - List subjects needing attention
+   - Holiday study recommendations
+
+The implementation is too large for a single file edit. Would you like me to:
+A) Create a new StudentResults component file from scratch?
+B) Make incremental updates to add these features one by one?
+C) Create additional helper components for performance insights?

@@ -1,0 +1,10 @@
+{
+  "name": "nguviu-performance-optimization",
+  "version": "1.0.0",
+  "description": "Performance optimization scripts for Render deployment",
+  "scripts": {
+    "migrate:images": "powershell -ExecutionPolicy Bypass -File ../scripts/migrate-images-to-frontend.ps1",
+    "optimize:images": "node scripts/optimize-media.mjs",
+    "check:size": "powershell -Command \"Get-ChildItem -Path public -Recurse | Measure-Object -Property Length -Sum | Select-Object @{Name='Size(MB)';Expression={[math]::Round($_.Sum / 1MB, 2)}}\""
+  }
+}

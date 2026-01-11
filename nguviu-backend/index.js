@@ -22,6 +22,9 @@ import galleryRoutes from "./routes/galleryAttachments.js";
 import adminRoutes from "./routes/admin.js";
 import submissionsRoutes from "./routes/submissions.js";
 import submitFormRoutes from "./routes/submitForm.js";
+import studentVerificationRoutes from "./routes/studentVerification.js";
+import resultsRoutes from "./routes/results.js";
+import performanceRoutes from "./routes/performance.js";
 
 // Initialize the Express app
 const app = express();
@@ -135,6 +138,9 @@ app.use("/api/submissions", submissionsRoutes);
 // Public submit form and admin helpers
 app.use("/api/submit-form", submitFormRoutes);
 app.use("/api/footer-links", footerLinksRoutes);
+app.use("/api/student-verification", studentVerificationRoutes);
+app.use("/api/results", resultsRoutes);
+app.use("/api/performance", performanceRoutes);
 
 // MongoDB connection setup — attempt to connect but don't crash the server
 const mongoUri =

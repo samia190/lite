@@ -25,6 +25,12 @@ import Legal from "./components/Legal";
 import SearchResults from "./components/SearchResults";
 import FeeStructure from "./components/FeeStructure";
 import HomeworkPortal from "./components/HomeworkPortal"; // ✅ keep this one
+import StudentVerification from "./components/StudentVerification";
+import StudentIDManagement from "./components/StudentIDManagement";
+import StudentResults from "./components/StudentResults";
+import ResultsManagement from "./components/ResultsManagement";
+import SchoolPerformance from "./components/SchoolPerformance";
+import SchoolPerformanceAdmin from "./components/SchoolPerformanceAdmin";
 
 import CurriculumOverview from "./components/subpages/CurriculumOverview.jsx";
 import CurriculumPrimary from "./components/subpages/CurriculumPrimary.jsx";
@@ -60,7 +66,12 @@ function MenuButton({ route, setRoute, setLoading, user }) {
 
   const links = [
     // admin quick link visible only when logged in as admin
-    ...(user && user.role === "admin" ? [{ key: "admin", label: "Admin", icon: "👤" }] : []),
+    ...(user && user.role === "admin" ? [
+      { key: "admin", label: "Admin", icon: "👤" },
+      { key: "student-id-management", label: "Student ID Cards", icon: "🪪" },
+      { key: "results-management", label: "Results Management", icon: "📊" },
+      { key: "performance-management", label: "School Performance", icon: "🏆" }
+    ] : []),
     { key: "home", label: "Home", icon: "🏠" },
     { key: "about", label: "About", icon: "ℹ️" },
     { key: "admissions", label: "Admissions", icon: "📝" },
@@ -442,6 +453,34 @@ export default function App() {
 
             case "signup":
               return <SignUp onAuth={handleAuth} user={user} />;
+
+            case "verify-student":
+              // Hidden route - only accessible via QR code scan
+              return <StudentVerification />;
+
+            case "student-id-management":
+              // Admin-only route for managing student IDs
+              if (user?.role === "admin")
+                return <StudentIDManagement user={user} />;
+              return <div>Access denied — admin only</div>;
+
+            case "student-results":
+              // Student-only route for viewing and downloading results
+              if (user?.role === "student")
+                return <StudentResults user={user} />;
+              return <div>Access denied — student only</div>;
+
+            case "results-management":
+              // Admin-only route for managing student results
+              if (user?.role === "admin")
+                return <ResultsManagement user={user} />;
+              return <div>Access denied — admin only</div>;
+
+            case "performance-management":
+              // Admin-only route for managing school performance
+              if (user?.role === "admin")
+                return <SchoolPerformanceAdmin user={user} />;
+              return <div>Access denied — admin only</div>;
 
             case "admin":
               if (user?.role === "admin")

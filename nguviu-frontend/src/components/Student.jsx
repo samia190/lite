@@ -365,6 +365,22 @@ export default function Student({ user, subRoute }) {
         <button onClick={() => switchTab("support-services")}>
           Support Services
         </button>
+        {user?.role === "student" && (
+          <button 
+            onClick={() => window.setRoute("student-results")}
+            style={{
+              background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+              color: "white",
+              border: "none",
+              padding: "8px 16px",
+              borderRadius: "6px",
+              fontWeight: "600",
+              cursor: "pointer"
+            }}
+          >
+            📄 My Results
+          </button>
+        )}
       </div>
 
       {/* ---------- CONTENT ---------- */}
