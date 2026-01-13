@@ -1,5 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import LazyImage from "./LazyImage";
+import OptimizedImage from "./OptimizedImage";
+import OptimizedVideo from "./OptimizedVideo";
 import { get, patch } from "../utils/api";
 import EditableHeading from "../components/EditableHeading";
 import EditableText from "../components/EditableText";
@@ -398,11 +400,10 @@ export default function Home({ user, setRoute }) {
                     <div key={index} className="section-child">
                       {child.image && (
                         <div className="section-image">
-                          <img
-                            src={safePath(child.image || "/images/hike.jpeg")}
-                            alt=""
+                          <OptimizedImage
+                            src={child.image || "/images/hike.jpeg"}
+                            alt={child.title || ""}
                             loading="lazy"
-                            decoding="async"
                             style={{
                               width: "100%",
                               height: "100%",
@@ -459,10 +460,14 @@ export default function Home({ user, setRoute }) {
           }}
         >
           {/* Lazy-loaded hero video */}
-          <video autoPlay loop muted style={{ width: "100%", height: "100%", objectFit: "cover" }}>
-            <source src={safePath("/images/videos/vid 1.mp4")} type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
+          <OptimizedVideo
+            src="/images/videos/vid 1.mp4"
+            autoPlay
+            loop
+            muted
+            priority={true}
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          />
 
           <div className="welcome-text video-text">
             Welcome to NGUVIU GIRLS' SENIOR SCHOOL!
@@ -531,11 +536,11 @@ const ImageSlider = () => {
 
   return (
     <div className="slider-container" style={{ width: "100%", height: "100%" }}>
-      <img
-        src={safePath(images[currentIndex])}
-        alt=""
+      <OptimizedImage
+        src={images[currentIndex]}
+        alt="School slideshow"
         className="slider-image"
-        loading="lazy"
+        priority={currentIndex === 0}
         style={{
           width: "100%",
           height: "100%",

@@ -161,15 +161,18 @@ export function initPerformanceMonitoring() {
 
 /**
  * Report Web Vitals (for production monitoring)
+ * Note: Install web-vitals package if needed: npm install web-vitals
  */
 export function reportWebVitals(onPerfEntry) {
   if (onPerfEntry && typeof onPerfEntry === 'function') {
-    import('web-vitals').then(({ getCLS, getFID, getFCP, getLCP, getTTFB }) => {
-      getCLS(onPerfEntry);
-      getFID(onPerfEntry);
-      getFCP(onPerfEntry);
-      getLCP(onPerfEntry);
-      getTTFB(onPerfEntry);
-    });
+    // Optional: Uncomment if web-vitals package is installed
+    // import('web-vitals').then(({ getCLS, getFID, getFCP, getLCP, getTTFB }) => {
+    //   getCLS(onPerfEntry);
+    //   getFID(onPerfEntry);
+    //   getFCP(onPerfEntry);
+    //   getLCP(onPerfEntry);
+    //   getTTFB(onPerfEntry);
+    // });
+    console.log('Web Vitals reporting available - install web-vitals package to enable');
   }
 }

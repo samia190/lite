@@ -5,6 +5,7 @@ import EditableHeading from "../components/EditableHeading";
 import EditableSubheading from "../components/EditableSubheading";
 import { safePath } from "../utils/paths";
 import LazyImage from "./LazyImage";
+import OptimizedImage from "./OptimizedImage";
 
 export default function About({ user }) {
   const [content, setContent] = useState({});
@@ -271,10 +272,10 @@ export default function About({ user }) {
               border: "3px solid #ddd",
             }}
           >
-            <img
-              src={safePath(content.principalImageUrl || "/images/background images/principle.jpeg")}
+            <OptimizedImage
+              src={content.principalImageUrl || "/images/background images/principle.jpeg"}
               alt="Principal"
-              
+              loading="lazy"
               style={{
                 width: "100%",
                 height: "100%",
@@ -325,9 +326,10 @@ export default function About({ user }) {
                 border: "3px solid #ddd",
               }}
             >
-              <img
-                src={safePath(content.deputyImageUrl || "/images/background images/deputy.jpeg")}
+              <OptimizedImage
+                src={content.deputyImageUrl || "/images/background images/deputy.jpeg"}
                 alt="Deputy Principal"
+                loading="lazy"
                 style={{
                   width: "100%",
                   height: "100%",

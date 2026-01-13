@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { safePath } from "../utils/paths";
+import OptimizedImage from "./OptimizedImage";
 
 export default function Header({ route, setRoute, setLoading, user, logout }) {
   const go = (r) => {
@@ -86,9 +87,10 @@ export default function Header({ route, setRoute, setLoading, user, logout }) {
               ←
             </button>
           )}
-          <img
+          <OptimizedImage
             alt="NGUVIU Girls Logo"
-            src={safePath("/header/logo.PNG")}
+            src="/header/logo.PNG"
+            priority={true}
             style={{
               width: 70,
               height: 70,

@@ -6,6 +6,7 @@ import EditableSubheading from "../components/EditableSubheading";
 import EditableText from "../components/EditableText";
 import EditableFileList from "../components/EditableFileList";
 import { safePath } from "../utils/paths";
+import OptimizedVideo from "../components/OptimizedVideo";
 import StudentAdmissionsGuide from "./subpages/StudentAdmissionsGuide.jsx";
 import StudentFees from "./subpages/StudentFees.jsx";
 import StudentExams from "./subpages/StudentExams.jsx";
@@ -159,31 +160,31 @@ export default function Student({ user, subRoute }) {
     { name: "", url: "/images/students/IMG_1650.JPG" },
     { name: "", url: "/images/students/IMG_1651.JPG" },
     { name: "", url: "/images/students/IMG_1653.JPG" },
-    { name: "", url: "/images/students/IMG_1655.JPG" },
-    { name: "", url: "/images/students/IMG_1659.JPG" },
-    { name: "", url: "/images/students/IMG_1667.JPG" },
-    { name: "", url: "/images/students/IMG_1669.JPG" },
-    { name: "", url: "/images/students/IMG_1671.JPG" },
-    { name: "", url: "/images/students/IMG_1672.JPG" },
-    { name: "", url: "/images/students/IMG_1673.JPG" },
-    { name: "", url: "/images/students/IMG_1674.JPG" },
-    { name: "", url: "/images/students/IMG_1675.JPG" },
-    { name: "", url: "/images/students/IMG_1676.JPG" },
-    { name: "", url: "/images/students/IMG_1677.JPG" },
-    { name: "", url: "/images/students/IMG_1680.JPG" },
-    { name: "", url: "/images/students/IMG_1681.JPG" },
-    { name: "", url: "/images/students/IMG_1682.JPG" },
-    { name: "", url: "/images/students/IMG_1683.JPG" },
-    { name: "", url: "/images/students/IMG_1684.JPG" },
-    { name: "", url: "/images/students/IMG_1685.JPG" },
-    { name: "", url: "/images/students/IMG_1686.JPG" },
-    { name: "", url: "/images/students/IMG_1687.JPG" },
-    { name: "", url: "/images/students/IMG_1688.JPG" },
-    { name: "", url: "/images/students/IMG_1689.JPG" },
-    { name: "", url: "/images/students/IMG_1690.JPG" },
-    { name: "", url: "/images/students/IMG_1691.JPG" },
-    { name: "", url: "/images/students/IMG_1692.JPG" },
-    { name: "", url: "/images/students/IMG_1693.JPG" },
+    { name: "", url: "/images/students/IMG_0778.JPG" },
+    { name: "", url: "/images/students/IMG_0779.JPG" },
+    { name: "", url: "/images/students/IMG_1030.JPG" },
+    { name: "", url: "/images/students/IMG_1043.JPG" },
+    { name: "", url: "/images/students/IMG_1047.JPG" },
+    { name: "", url: "/images/students/IMG_1056.JPG" },
+    { name: "", url: "/images/students/IMG_1067.JPG" },
+    { name: "", url: "/images/students/IMG_1086.JPG" },
+    { name: "", url: "/images/students/IMG_1194.JPG" },
+    { name: "", url: "/images/students/IMG_1221.JPG" },
+    { name: "", url: "/images/students/IMG_1257.JPG" },
+    { name: "", url: "/images/students/IMG_1329.JPG" },
+    { name: "", url: "/images/students/IMG_1332.JPG" },
+    { name: "", url: "/images/students/IMG_1413.JPG" },
+    { name: "", url: "/images/students/IMG_1415.JPG" },
+    { name: "", url: "/images/students/IMG_1424.JPG" },
+    { name: "", url: "/images/students/life.JPG" },
+    { name: "", url: "/images/students/life (2).JPG" },
+    { name: "", url: "/images/students/life 5.JPG" },
+    { name: "", url: "/images/students/sc.JPG" },
+    { name: "", url: "/images/students/sc (2).JPG" },
+    { name: "", url: "/images/students/sc (3).JPG" },
+    { name: "", url: "/images/students/std 0.JPG" },
+    { name: "", url: "/images/students/std 2.JPG" },
+    { name: "", url: "/images/students/std 4.JPG" },
     { name: "", url: "/images/students/IMG_1745.JPG" },
     { name: "", url: "/images/students/IMG_1741.JPG" },
   ];
@@ -267,26 +268,18 @@ export default function Student({ user, subRoute }) {
     overflow: "hidden",
   }}
 >
-  <video
-    width="100%"
-    height="100%"
+  <OptimizedVideo
+    src={content.heroVideoUrl || "/images/students/life 1.mp4"}
     autoPlay
-    preload="none"
-    playsInline
     loop
     muted
+    priority={true}
     style={{
       width: "100%",
       height: "100%",
       objectFit: "cover",
     }}
-  >
-    <source
-      src={safePath(content.heroVideoUrl || "/images/students/life 1.mp4")}
-      type="video/mp4"
-    />
-    Your browser does not support the video tag.
-  </video>
+  />
 
   {/* Dark overlay */}
   <div

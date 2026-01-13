@@ -90,11 +90,17 @@ if (!fs.existsSync(imagesDir)) fs.mkdirSync(imagesDir, { recursive: true });
 // Cache control middleware for static assets
 const setStaticCacheHeaders = (res, path) => {
   if (path.match(/\\.(jpg|jpeg|png|gif|ico|svg|webp)$/)) {
-    // Images - cache for 1 year
+    // Images - cache for 1 year with immutable
     res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
-  } else if (path.match(/\\.(css|js)$/)) {
+    res.setHeader('Vary', 'Accept-Encoding');
+  } else if (path.match(/\.(css|js)$/)) {
     // CSS/JS - cache for 1 year (with hash in filename)
     res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+    res.setHeader('Vary', 'Accept-Encoding');
+  } else if (path.match(/\.(mp4|webm|ogg)$/)) {
+    // Videos - cache for 1 month
+    res.setHeader('Cache-Control', 'public, max-age=2592000');
+    res.setHeader('Accept-Ranges', 'bytes');
   } else if (path.match(/\\.(pdf|doc|docx)$/)) {
     // Documents - cache for 1 week
     res.setHeader('Cache-Control', 'public, max-age=604800');

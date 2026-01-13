@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { post, saveToken } from "../utils/api";
 import PageBackground from "../components/PageBackground"; // ✅ ADDED
+import OptimizedImage from "./OptimizedImage";
 
 
 export default function SignUp({ onAuth }) {
@@ -25,7 +26,7 @@ export default function SignUp({ onAuth }) {
     const images = [
       '/images/students/IMG_1641.JPG',
       '/images/students/IMG_1651.JPG',
-      '/images/students/IMG_1673.JPG',
+      '/images/students/IMG_1424.JPG',
       '/images/students/std 7.JPG'
     ];
     images.forEach(src => {
@@ -110,14 +111,10 @@ export default function SignUp({ onAuth }) {
         opacity: imagesLoaded ? 1 : 0,
         transition: 'opacity 1.5s ease-in-out'
       }}>
-        <img 
+        <OptimizedImage 
           src="/images/students/IMG_1641.JPG" 
-          alt="" 
-          loading="eager" 
-          decoding="async" 
-          fetchpriority="high" 
-          width="170" 
-          height="170" 
+          alt="Student" 
+          priority={true}
           onLoad={handleImageLoad}
           style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
         />
@@ -138,14 +135,10 @@ export default function SignUp({ onAuth }) {
         opacity: imagesLoaded ? 1 : 0,
         transition: 'opacity 1.8s ease-in-out 0.3s'
       }}>
-        <img 
+        <OptimizedImage 
           src="/images/students/IMG_1651.JPG" 
-          alt="" 
-          loading="eager" 
-          decoding="async" 
-          fetchpriority="high" 
-          width="150" 
-          height="150" 
+          alt="Student" 
+          priority={true}
           onLoad={handleImageLoad}
           style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
         />
@@ -167,14 +160,10 @@ export default function SignUp({ onAuth }) {
         opacity: imagesLoaded ? 1 : 0,
         transition: 'opacity 2s ease-in-out 0.6s'
       }}>
-        <img 
-          src="/images/students/IMG_1673.JPG" 
-          alt="" 
-          loading="eager" 
-          decoding="async" 
-          fetchpriority="high" 
-          width="145" 
-          height="145" 
+        <OptimizedImage 
+          src="/images/students/IMG_1424.JPG" 
+          alt="Student" 
+          priority={true}
           onLoad={handleImageLoad}
           style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
         />
@@ -195,14 +184,10 @@ export default function SignUp({ onAuth }) {
         opacity: imagesLoaded ? 1 : 0,
         transition: 'opacity 2.2s ease-in-out 0.9s'
       }}>
-        <img 
+        <OptimizedImage 
           src="/images/students/std 7.JPG" 
-          alt="" 
-          loading="eager" 
-          decoding="async" 
-          fetchpriority="high" 
-          width="130" 
-          height="130" 
+          alt="Student" 
+          priority={true}
           onLoad={handleImageLoad}
           style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
         />

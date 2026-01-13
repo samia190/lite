@@ -7,14 +7,15 @@
     <title>NGUVIU GIRLS</title>
     
     <!-- Preconnect to external domains for faster resource loading -->
-    <link rel="preconnect" href="https://nguviu-school.onrender.com" />
+    <link rel="preconnect" href="https://nguviu-school.onrender.com" crossorigin />
     <link rel="dns-prefetch" href="https://nguviu-school.onrender.com" />
     
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="/header/favicon.jpeg" />
     
-    <!-- Preload critical assets -->
+    <!-- Preload critical assets for sub-500ms load -->
     <link rel="modulepreload" href="/src/main.jsx" />
+    <link rel="preload" href="/header/logo.PNG" as="image" />
     
     <!-- Font optimization -->
     <style>
@@ -30,22 +31,64 @@
     <!-- Critical CSS inlined for faster first paint -->
     <style>
       * { box-sizing: border-box; margin: 0; padding: 0; }
-      body { font-family: system-ui, -apple-system, sans-serif; }
+      body { 
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
       #root { min-height: 100vh; }
-      /* Loading spinner */
+      
+      /* Initial Loader Styles - matches Loader component */
       .app-loading {
+        position: fixed;
+        inset: 0;
         display: flex;
         align-items: center;
         justify-content: center;
-        min-height: 100vh;
+        background: #481010ff;
+        z-index: 9999;
+      }
+      
+      .initial-loader {
+        position: relative;
+        width: 140px;
+        height: 140px;
+      }
+      
+      .initial-loader-ring {
+        position: absolute;
+        inset: 0;
+        border: 4px solid rgba(255,255,255,0.1);
+        border-top-color: #fff;
+        border-radius: 50%;
+        animation: spin 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+      }
+      
+      .initial-loader-logo {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 70%;
+        height: 70%;
+        object-fit: contain;
+        border-radius: 50%;
+      }
+      
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
       }
     </style>
   </head>
   <body>
     <div id="root">
-      <!-- Loading state for better UX -->
+      <!-- Optimized Loading state matching Loader component -->
       <div class="app-loading">
-        <div>Loading...</div>
+        <div class="initial-loader">
+          <div class="initial-loader-ring"></div>
+          <img src="/header/logo.PNG" alt="NGUVIU logo" class="initial-loader-logo" />
+        </div>
       </div>
     </div>
     <script type="module" src="/src/main.jsx"></script>

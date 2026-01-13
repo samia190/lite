@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { post } from "../utils/api";
+import Loader from "./Loader";
 
 export default function StudentVerification() {
   const [verificationData, setVerificationData] = useState(null);
@@ -95,22 +96,8 @@ export default function StudentVerification() {
           boxShadow: '0 20px 60px rgba(0,0,0,0.3)',
           maxWidth: '400px'
         }}>
-          <div style={{
-            width: '60px',
-            height: '60px',
-            border: '4px solid #e5e7eb',
-            borderTopColor: '#3b82f6',
-            borderRadius: '50%',
-            margin: '0 auto 24px',
-            animation: 'spin 1s linear infinite'
-          }}></div>
-          <h2 style={{ color: '#1f2937', marginBottom: '8px' }}>Verifying ID Card</h2>
-          <p style={{ color: '#6b7280', fontSize: '14px' }}>Please wait...</p>
-          <style>{`
-            @keyframes spin {
-              to { transform: rotate(360deg); }
-            }
-          `}</style>
+          <Loader size={60} />
+          <h2 style={{ color: '#1f2937', marginTop: '24px', marginBottom: '8px' }}>Verifying ID Card</h2>
         </div>
       </div>
     );

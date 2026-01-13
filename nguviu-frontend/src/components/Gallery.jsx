@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { safePath } from "../utils/paths";
 import { get } from "../utils/api";
 import LazyImage from "./LazyImage";
-import { OptimizedBackgroundImage } from "./OptimizedImage";
+import OptimizedImage, { OptimizedBackgroundImage } from "./OptimizedImage";
 
 export default function Gallery() {
   const [items, setItems] = useState([]);
@@ -58,15 +58,15 @@ export default function Gallery() {
           { url: "/images/gallery/IMG_0803.JPG", originalName: "Campus Life", description: "Vibrant campus life" },
           { url: "/images/gallery/IMG_0937.JPG", originalName: "School Programs", description: "Engaging school programs" },
           { url: "/images/gallery/IMG_1006.JPG", originalName: "Academic Excellence", description: "Striving for academic excellence" },
-          { url: "/images/gallery/IMG_1167.JPG", originalName: "Student Achievement", description: "Celebrating student achievements" },
-          { url: "/images/gallery/IMG_1189.JPG", originalName: "School Community", description: "Our strong school community" },
-          { url: "/images/gallery/IMG_1194.JPG", originalName: "Student Life", description: "Enriching student life experiences" },
-          { url: "/images/gallery/IMG_1210.JPG", originalName: "School Activities", description: "Diverse school activities" },
-          { url: "/images/gallery/IMG_1218.JPG", originalName: "Campus Events", description: "Regular campus events" },
-          { url: "/images/gallery/IMG_1220.JPG", originalName: "School Spirit", description: "Showing our school spirit" },
-          { url: "/images/gallery/IMG_1221.JPG", originalName: "Student Engagement", description: "Active student engagement" },
-          { url: "/images/gallery/IMG_1226.JPG", originalName: "Learning Together", description: "Collaborative learning" },
-          { url: "/images/gallery/IMG_1230.JPG", originalName: "School Culture", description: "Our unique school culture" },
+          { url: "/images/replace/IMG_0969.JPG", originalName: "Student Achievement", description: "Celebrating student achievements" },
+          { url: "/images/replace/IMG_0970.JPG", originalName: "School Community", description: "Our strong school community" },
+          { url: "/images/replace/IMG_0971.JPG", originalName: "Student Life", description: "Enriching student life experiences" },
+          { url: "/images/replace/IMG_0972.JPG", originalName: "School Activities", description: "Diverse school activities" },
+          { url: "/images/replace/IMG_0973.JPG", originalName: "Campus Events", description: "Regular campus events" },
+          { url: "/images/replace/IMG_0974.JPG", originalName: "School Spirit", description: "Showing our school spirit" },
+          { url: "/images/replace/IMG_0981.JPG", originalName: "Student Engagement", description: "Active student engagement" },
+          { url: "/images/replace/IMG_0982.JPG", originalName: "Learning Together", description: "Collaborative learning" },
+          { url: "/images/replace/IMG_0983.JPG", originalName: "School Culture", description: "Our unique school culture" },
           { url: "/images/gallery/IMG_1853.JPG", originalName: "School Moments", description: "Capturing special moments" },
           { url: "/images/gallery/IMG_1869.JPG", originalName: "Student Success", description: "Celebrating student success" },
           { url: "/images/gallery/IMG_1875.JPG", originalName: "School Pride", description: "Taking pride in our school" },
@@ -509,9 +509,10 @@ export default function Gallery() {
               </div>
             )}
             
-            <img
-              src={safePath(items[previewIndex].url)}
+            <OptimizedImage
+              src={items[previewIndex].url}
               alt="Preview"
+              priority={true}
               onLoad={() => setImageLoading(false)}
               style={{
                 maxWidth: "100%",

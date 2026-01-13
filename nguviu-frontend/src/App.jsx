@@ -207,14 +207,25 @@ export default function App() {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
 
-  // Loader + expose global router
+  // Fast loader - optimized for sub-500ms load
   useEffect(() => {
-    const handleLoad = () => setLoading(false);
+    const handleLoad = () => {
+      // Immediate hide for faster perceived performance
+      requestAnimationFrame(() => {
+        setLoading(false);
+      });
+    };
 
     if (document.readyState === "complete") {
-      setLoading(false);
+      handleLoad();
     } else {
-      window.addEventListener("load", handleLoad);
+      // Use DOMContentLoaded for faster initial render
+      if (document.readyState === "interactive") {
+        handleLoad();
+      } else {
+        window.addEventListener("DOMContentLoaded", handleLoad, { once: true });
+        window.addEventListener("load", handleLoad, { once: true });
+      }
     }
 
     // make router globally available and maintain a simple in-memory route stack
@@ -239,6 +250,7 @@ export default function App() {
     window.__route = route;
 
     return () => {
+      window.removeEventListener("DOMContentLoaded", handleLoad);
       window.removeEventListener("load", handleLoad);
     };
   }, [route]);
@@ -296,18 +308,9 @@ export default function App() {
     setRoute("home");
   }
 
-  // Soft fade loader
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (loading) setLoading(false);
-    }, 100);
-
-    return () => clearTimeout(timer);
-  }, [loading, route]);
-
   return (
     <>
-      {/* Loader overlay */}
+      {/* Fast Loader overlay - optimized for performance */}
       <div
         style={{
           position: "fixed",
@@ -317,7 +320,9 @@ export default function App() {
           display: loading ? "flex" : "none",
           alignItems: "center",
           justifyContent: "center",
-          transition: "opacity 0.5s ease",
+          opacity: loading ? 1 : 0,
+          transition: "opacity 0.3s ease-out",
+          willChange: loading ? "opacity" : "auto",
         }}
       >
         <Loader />
@@ -337,8 +342,8 @@ export default function App() {
         style={{
           padding: 20,
           minHeight: "60vh",
-         opacity: loading ? 0.6 : 1,
-          transition: "opacity 0.5s ease",
+          opacity: loading ? 0 : 1,
+          transition: "opacity 0.3s ease-in",
         }} 
       >
        

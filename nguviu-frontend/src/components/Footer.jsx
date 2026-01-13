@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { safePath } from "../utils/paths";
 import { get } from "../utils/api";
+import OptimizedImage from "./OptimizedImage";
 
 const defaultLinks = {
   quickLinks: [
@@ -144,9 +145,10 @@ export default function Footer() {
             className="brand footer-brand"
             style={{ display: "flex", alignItems: "center", gap: 12 }}
           >
-            <img
+            <OptimizedImage
               alt="NGUVIU logo"
-              src={safePath("/header/logo.PNG")}
+              src="/header/logo.PNG"
+              priority={true}
               style={{ width: 60, height: 60 }}
             />
             <div>
@@ -173,9 +175,10 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <img
-                  src={safePath("/header/knec.PNG")}
+                <OptimizedImage
+                  src="/header/knec.PNG"
                   alt="KNEC"
+                  loading="lazy"
                   style={{ width: 80, height: 40, objectFit: "contain" }}
                 />
               </a>
@@ -184,9 +187,10 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <img
-                  src={safePath("/header/tsc.PNG")}
+                <OptimizedImage
+                  src="/header/tsc.PNG"
                   alt="TSC"
+                  loading="lazy"
                   style={{ width: 80, height: 40, objectFit: "contain" }}
                 />
               </a>
@@ -195,9 +199,10 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <img
-                  src={safePath("/header/MOF E.PNG")}
+                <OptimizedImage
+                  src="/header/MOF E.PNG"
                   alt="Ministry of Education"
+                  loading="lazy"
                   style={{ width: 80, height: 40, objectFit: "contain" }}
                 />
               </a>
@@ -206,9 +211,10 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <img
-                  src={safePath("/header/kicd.PNG")}
+                <OptimizedImage
+                  src="/header/kicd.PNG"
                   alt="KICD"
+                  loading="lazy"
                   style={{ width: 80, height: 40, objectFit: "contain" }}
                 />
               </a>
@@ -217,9 +223,10 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <img
-                  src={safePath("/header/CBE.PNG")}
-                  alt="CBC Kenya"
+                <OptimizedImage
+                  src="/header/CBE.PNG"
+                  alt="CBE"
+                  loading="lazy"
                   style={{ width: 80, height: 40, objectFit: "contain" }}
                 />
               </a>

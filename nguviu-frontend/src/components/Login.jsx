@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { post, get } from "../utils/api";
 import PageBackground from "../components/PageBackground";
+import OptimizedImage from "./OptimizedImage";
 
 export default function Login({ onAuth, navigate }) {
   const [status, setStatus] = useState("");
@@ -23,7 +24,7 @@ export default function Login({ onAuth, navigate }) {
     });
   };
 
-  // Preload images immediately
+  // Preload images immediately with WebP support
   useEffect(() => {
     const images = [
       '/images/students/IMG_0778.JPG',
@@ -31,9 +32,16 @@ export default function Login({ onAuth, navigate }) {
       '/images/students/IMG_1221.JPG',
       '/images/students/std 2.JPG'
     ];
+    
+    // Preload both WebP and original formats
     images.forEach(src => {
       const img = new Image();
       img.src = src;
+      
+      // Also try WebP version
+      const webpSrc = src.replace(/\.(jpe?g|png)$/i, '.webp');
+      const webpImg = new Image();
+      webpImg.src = webpSrc;
     });
   }, []);
 
@@ -170,14 +178,10 @@ export default function Login({ onAuth, navigate }) {
         opacity: imagesLoaded ? 1 : 0,
         transition: 'opacity 1.5s ease-in-out'
       }}>
-        <img 
+        <OptimizedImage 
           src="/images/students/IMG_0778.JPG" 
-          alt="" 
-          loading="eager" 
-          decoding="async" 
-          fetchpriority="high" 
-          width="180" 
-          height="180" 
+          alt="Student" 
+          priority={true}
           onLoad={handleImageLoad}
           style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
         />
@@ -198,14 +202,10 @@ export default function Login({ onAuth, navigate }) {
         opacity: imagesLoaded ? 1 : 0,
         transition: 'opacity 1.8s ease-in-out 0.3s'
       }}>
-        <img 
+        <OptimizedImage 
           src="/images/students/IMG_1194.JPG" 
-          alt="" 
-          loading="eager" 
-          decoding="async" 
-          fetchpriority="high" 
-          width="140" 
-          height="140" 
+          alt="Student" 
+          priority={true}
           onLoad={handleImageLoad}
           style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
         />
@@ -227,14 +227,10 @@ export default function Login({ onAuth, navigate }) {
         opacity: imagesLoaded ? 1 : 0,
         transition: 'opacity 2s ease-in-out 0.6s'
       }}>
-        <img 
+        <OptimizedImage 
           src="/images/students/IMG_1221.JPG" 
-          alt="" 
-          loading="eager" 
-          decoding="async" 
-          fetchpriority="high" 
-          width="160" 
-          height="160" 
+          alt="Student" 
+          priority={true}
           onLoad={handleImageLoad}
           style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
         />
@@ -255,14 +251,10 @@ export default function Login({ onAuth, navigate }) {
         opacity: imagesLoaded ? 1 : 0,
         transition: 'opacity 2.2s ease-in-out 0.9s'
       }}>
-        <img 
+        <OptimizedImage 
           src="/images/students/std 2.JPG" 
-          alt="" 
-          loading="eager" 
-          decoding="async" 
-          fetchpriority="high" 
-          width="120" 
-          height="120" 
+          alt="Student" 
+          priority={true}
           onLoad={handleImageLoad}
           style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
         />
