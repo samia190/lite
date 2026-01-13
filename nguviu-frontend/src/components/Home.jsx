@@ -140,7 +140,7 @@ export default function Home({ user, setRoute }) {
       childContainers: [
         {
           title: "Students Engaged in Current Affairs Reading",
-          text: "A group of students reading newspapers, fostering awareness of current events and promoting critical thinking in a group setting.",
+          text: "Students engaged in reading of newspapers during N.I.E launch.",
           image: "/images/gallery/school life/std 1.jpg",
         },
         {
