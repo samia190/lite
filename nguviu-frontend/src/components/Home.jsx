@@ -139,7 +139,7 @@ export default function Home({ user, setRoute }) {
       image: "/images/gallery/school life/std 1.jpg",
       childContainers: [
         {
-          title: "Students Engaged in Current Affairs Reading",
+          title: "Nation in Education (N.I.E)",
           text: "Students engaged in reading of newspapers during N.I.E launch.",
           image: "/images/gallery/school life/std 1.jpg",
         },
