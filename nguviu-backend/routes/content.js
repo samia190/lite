@@ -42,6 +42,40 @@ router.get("/", async (req, res) => {
 });
 
 /**
+ * ✅ GET /api/content/summary/:type
+ * Returns a summary (title, body) for a specific content type
+ * Used for lightweight loading of content sections
+ */
+router.get("/summary/:type", async (req, res) => {
+  const { type } = req.params;
+  
+  try {
+    // If DB is not connected, return safe default
+    if (mongoose.connection.readyState !== 1) {
+      return res.json({ type, title: "", body: "" });
+    }
+
+    const content = await Content.findOne({ type }).select('type title body intro');
+    
+    // Return safe default if not found
+    if (!content) {
+      return res.json({ type, title: "", body: "" });
+    }
+
+    return res.json({
+      type: content.type,
+      title: content.title || "",
+      body: content.body || "",
+      intro: content.intro || "",
+    });
+  } catch (err) {
+    console.error("Error fetching content summary:", err);
+    // Return safe default on error
+    return res.json({ type, title: "", body: "" });
+  }
+});
+
+/**
  * ✅ GET /api/content/:idOrType
  *
  * - If :idOrType is a valid MongoDB ObjectId → look up by _id.
