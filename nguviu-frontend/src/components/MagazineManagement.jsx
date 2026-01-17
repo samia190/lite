@@ -633,40 +633,7 @@ export default function MagazineManagement({ user }) {
                   </div>
                 )}
               </div>
-            )}value={formData.pdfUrl}
-              onChange={(e) => setFormData({ ...formData, pdfUrl: e.target.value })}
-              placeholder="https://example.com/magazine.pdf or /uploads/magazine.pdf"
-              style={{
-                width: "100%",
-                padding: "8px 12px",
-                fontSize: 16,
-                border: "1px solid #ccc",
-                borderRadius: 4
-              }}
-              required
-            />
-            <small style={{ color: "#666", display: "block", marginTop: 4 }}>
-              💡 Tip: Upload your PDF file first using the Files/Media manager, then copy the URL here.
-            </small>
-          </div>
-
-          <div style={{ marginBottom: "1rem" }}>
-            <label style={{ display: "block", fontWeight: "bold", marginBottom: 4 }}>
-              Cover Image URL (Optional)
-            </label>
-            <input
-              type="url"
-              value={formData.coverImage}
-              onChange={(e) => setFormData({ ...formData, coverImage: e.target.value })}
-              placeholder="https://example.com/cover.jpg or /uploads/cover.jpg"
-              style={{
-                width: "100%",
-                padding: "8px 12px",
-                fontSize: 16,
-                border: "1px solid #ccc",
-                borderRadius: 4
-              }}
-            />
+            )}
           </div>
 
           <div style={{ display: "flex", gap: 12 }}>
