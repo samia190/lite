@@ -1,0 +1,51 @@
+{
+  "@context": "https://schema.org",
+  "@type": "EducationalOrganization",
+  "name": "NGUVIU GIRLS School",
+  "alternateName": "NGUVIU GIRLS",
+  "description": "Excellence in Education - A leading girls' school offering quality education with comprehensive curriculum, dedicated staff, excellent facilities, and strong academic performance.",
+  "url": "https://your-domain.com",
+  "logo": "https://your-domain.com/header/logo.PNG",
+  "image": "https://your-domain.com/header/logo.PNG",
+  "email": "info@nguviugirls.school",
+  "telephone": "+XXX-XXX-XXXX",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Your Street Address",
+    "addressLocality": "Your City",
+    "addressRegion": "Your Region/State",
+    "postalCode": "Your Postal Code",
+    "addressCountry": "Your Country"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": "0.0000000",
+    "longitude": "0.0000000"
+  },
+  "sameAs": [
+    "https://facebook.com/your-page",
+    "https://twitter.com/your-handle",
+    "https://instagram.com/your-handle"
+  ],
+  "contactPoint": [
+    {
+      "@type": "ContactPoint",
+      "contactType": "Admissions",
+      "telephone": "+XXX-XXX-XXXX",
+      "email": "admissions@nguviugirls.school",
+      "availableLanguage": "English"
+    },
+    {
+      "@type": "ContactPoint",
+      "contactType": "General Inquiries",
+      "telephone": "+XXX-XXX-XXXX",
+      "email": "info@nguviugirls.school",
+      "availableLanguage": "English"
+    }
+  ],
+  "offers": {
+    "@type": "Offer",
+    "category": "Education",
+    "name": "School Admissions"
+  }
+}

@@ -371,7 +371,7 @@ export default function About({ user }) {
               }}
             >
               <LazyImage
-                src={safePath(content.deputy2ImageUrl || "/images/background images/deputy.jpeg")}
+                src={safePath(content.deputy2ImageUrl || "/images/background images/miss.png")}
                 alt="Deputy Principal 2"
                 style={{
                   width: "100%",
