@@ -1,13 +1,11 @@
 // Service Worker for caching and offline functionality
-const CACHE_NAME = 'nguviu-v1';
-const RUNTIME_CACHE = 'nguviu-runtime-v1';
+const CACHE_NAME = 'nguviu-v2';
+const RUNTIME_CACHE = 'nguviu-runtime-v2';
 
-// Assets to cache immediately on install
+// Only cache essential static assets that actually exist in build
 const PRECACHE_URLS = [
   '/',
   '/index.html',
-  '/src/main.jsx',
-  '/src/App.jsx',
 ];
 
 // Install event - cache critical assets

@@ -8,6 +8,8 @@ export default defineConfig({
     react({
       // Fast Refresh for instant updates
       fastRefresh: true,
+      // Ensure proper JSX handling
+      jsxRuntime: 'automatic',
     }),
     // Brotli compression for production
     compression({

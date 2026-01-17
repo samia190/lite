@@ -37,11 +37,17 @@ export default function OptimizedImage({
 
   // Generate responsive srcset for different screen sizes
   const generateSrcSet = (originalSrc) => {
-    if (!originalSrc) return "";
-    const base = originalSrc.replace(/\\.[^.]+$/, '');
-    const ext = originalSrc.match(/\\.[^.]+$/)?.[0] || '';
+    if (!originalSrc) return undefined;
     
-    // Create srcset for 1x, 2x displays
+    // Only generate srcset for valid image paths
+    if (!originalSrc.match(/\.(jpg|jpeg|png|webp)$/i)) {
+      return undefined;
+    }
+    
+    const base = originalSrc.replace(/\.[^.]+$/, '');
+    const ext = originalSrc.match(/\.[^.]+$/)?.[0] || '';
+    
+    // Create srcset for 1x, 2x displays - properly formatted
     return `${originalSrc} 1x, ${base}@2x${ext} 2x`;
   };
 
@@ -107,7 +113,7 @@ export default function OptimizedImage({
       )}
       
       {/* Shimmer animation keyframes */}
-      <style jsx>{`
+      <style>{`
         @keyframes shimmer {
           0% { background-position: -200% 0; }
           100% { background-position: 200% 0; }
