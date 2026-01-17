@@ -30,6 +30,7 @@ const defaultLinks = {
 export default function Footer() {
   const year = new Date().getFullYear();
   const [links, setLinks] = useState(defaultLinks);
+  const [magazine, setMagazine] = useState(null);
 
   const safeList = (list, fallback = []) => (Array.isArray(list) ? list : fallback);
 
@@ -46,6 +47,17 @@ export default function Footer() {
       })
       .catch(() => {
         // Silent fail – keep defaultLinks
+      });
+
+    // Fetch latest magazine for cover preview
+    get("/api/school-magazine")
+      .then((data) => {
+        if (data && data.pdfUrl) {
+          setMagazine(data);
+        }
+      })
+      .catch(() => {
+        // Silent fail
       });
   }, []);
 
@@ -358,8 +370,31 @@ export default function Footer() {
               </span>
               <span>School Magazine</span>
             </h4>
+            {magazine && magazine.coverImage && (
+              <div style={{
+                marginBottom: 12,
+                borderRadius: 6,
+                overflow: "hidden",
+                boxShadow: "0 2px 4px rgba(0,0,0,0.2)",
+                maxWidth: 120,
+              }}>
+                <img
+                  src={magazine.coverImage}
+                  alt="Latest Magazine Cover"
+                  style={{
+                    width: "100%",
+                    height: "auto",
+                    display: "block",
+                    aspectRatio: "3/4",
+                    objectFit: "cover"
+                  }}
+                />
+              </div>
+            )}
             <p style={{ fontSize: 14, color: "#666", marginBottom: 8 }}>
-              Read our latest school magazine
+              {magazine ? 
+                (magazine.issue ? `${magazine.issue} - ${new Date(magazine.date).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}` : "Read our latest magazine") 
+                : "Read our school magazine"}
             </p>
             <a
               href="#newsletter"

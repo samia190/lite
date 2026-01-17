@@ -1,10 +1,99 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { get } from "../utils/api";
 
 export default function SchoolMagazineViewer() {
   const [magazine, setMagazine] = useState(null);
   const [loading, setLoading] = useState(true);
   const [showPdf, setShowPdf] = useState(false);
+  const [pdfDoc, setPdfDoc] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+  const [rendering, setRendering] = useState(false);
+  const [scale, setScale] = useState(1.5);
+  const canvasRef = useRef(null);
+  const containerRef = useRef(null);
+
+  // Load PDF.js library
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
+    script.async = true;
+    document.body.appendChild(script);
+
+    script.onload = () => {
+      if (window.pdfjsLib) {
+        window.pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+      }
+    };
+
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
+
+  // Render PDF page
+  async function renderPage(pageNum) {
+    if (!pdfDoc || rendering) return;
+    
+    setRendering(true);
+    try {
+      const page = await pdfDoc.getPage(pageNum);
+      const canvas = canvasRef.current;
+      if (!canvas) return;
+
+      const context = canvas.getContext('2d');
+      const viewport = page.getViewport({ scale });
+
+      canvas.height = viewport.height;
+      canvas.width = viewport.width;
+
+      await page.render({
+        canvasContext: context,
+        viewport: viewport
+      }).promise;
+
+      setCurrentPage(pageNum);
+    } catch (err) {
+      console.error('Error rendering page:', err);
+    } finally {
+      setRendering(false);
+    }
+  }
+
+  // Load PDF document
+  async function loadPdf(url) {
+    if (!window.pdfjsLib) {
+      console.error('PDF.js not loaded');
+      return;
+    }
+
+    try {
+      const loadingTask = window.pdfjsLib.getDocument(url);
+      const pdf = await loadingTask.promise;
+      setPdfDoc(pdf);
+      setTotalPages(pdf.numPages);
+      setCurrentPage(1);
+      
+      // Wait a moment for canvas to be ready
+      setTimeout(() => renderPage(1), 100);
+    } catch (err) {
+      console.error('Error loading PDF:', err);
+    }
+  }
+
+  // Handle page changes
+  useEffect(() => {
+    if (pdfDoc && currentPage > 0 && currentPage <= totalPages) {
+      renderPage(currentPage);
+    }
+  }, [currentPage, pdfDoc, scale]);
+
+  // Load PDF when viewer is opened
+  useEffect(() => {
+    if (showPdf && magazine?.pdfUrl && !pdfDoc) {
+      loadPdf(magazine.pdfUrl);
+    }
+  }, [showPdf, magazine]);
 
   useEffect(() => {
     async function fetchMagazine() {
@@ -247,17 +336,118 @@ export default function SchoolMagazineViewer() {
           overflow: "hidden",
           boxShadow: "0 4px 8px rgba(0,0,0,0.1)"
         }}>
+          {/* Viewer Header */}
           <div style={{
             background: "#481010ff",
             color: "#fff",
             padding: "12px 16px",
             display: "flex",
             justifyContent: "space-between",
-            alignItems: "center"
+            alignItems: "center",
+            flexWrap: "wrap",
+            gap: 12
           }}>
             <strong>📖 Magazine Viewer</strong>
+            
+            {/* Page Controls */}
+            {totalPages > 0 && (
+              <div style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 12,
+                background: "rgba(255,255,255,0.1)",
+                padding: "6px 12px",
+                borderRadius: 6
+              }}>
+                <button
+                  onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
+                  disabled={currentPage <= 1 || rendering}
+                  style={{
+                    background: currentPage <= 1 ? "#666" : "#e0ef0aff",
+                    color: currentPage <= 1 ? "#999" : "#333",
+                    border: "none",
+                    padding: "6px 12px",
+                    borderRadius: 4,
+                    cursor: currentPage <= 1 ? "not-allowed" : "pointer",
+                    fontWeight: "bold",
+                    fontSize: 14
+                  }}
+                >
+                  ← Prev
+                </button>
+                
+                <span style={{ fontSize: 14, fontWeight: "bold" }}>
+                  Page {currentPage} / {totalPages}
+                </span>
+                
+                <button
+                  onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
+                  disabled={currentPage >= totalPages || rendering}
+                  style={{
+                    background: currentPage >= totalPages ? "#666" : "#e0ef0aff",
+                    color: currentPage >= totalPages ? "#999" : "#333",
+                    border: "none",
+                    padding: "6px 12px",
+                    borderRadius: 4,
+                    cursor: currentPage >= totalPages ? "not-allowed" : "pointer",
+                    fontWeight: "bold",
+                    fontSize: 14
+                  }}
+                >
+                  Next →
+                </button>
+              </div>
+            )}
+
+            {/* Zoom Controls */}
+            <div style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 8
+            }}>
+              <button
+                onClick={() => setScale(Math.max(0.5, scale - 0.25))}
+                disabled={rendering}
+                style={{
+                  background: "#fff",
+                  color: "#333",
+                  border: "none",
+                  padding: "6px 10px",
+                  borderRadius: 4,
+                  cursor: "pointer",
+                  fontSize: 16,
+                  fontWeight: "bold"
+                }}
+                title="Zoom Out"
+              >
+                −
+              </button>
+              <span style={{ fontSize: 13 }}>{Math.round(scale * 100)}%</span>
+              <button
+                onClick={() => setScale(Math.min(3, scale + 0.25))}
+                disabled={rendering}
+                style={{
+                  background: "#fff",
+                  color: "#333",
+                  border: "none",
+                  padding: "6px 10px",
+                  borderRadius: 4,
+                  cursor: "pointer",
+                  fontSize: 16,
+                  fontWeight: "bold"
+                }}
+                title="Zoom In"
+              >
+                +
+              </button>
+            </div>
+
             <button
-              onClick={() => setShowPdf(false)}
+              onClick={() => {
+                setShowPdf(false);
+                setPdfDoc(null);
+                setCurrentPage(1);
+              }}
               style={{
                 background: "transparent",
                 border: "1px solid #fff",
@@ -271,47 +461,149 @@ export default function SchoolMagazineViewer() {
               Close ✕
             </button>
           </div>
-          <div style={{
-            position: "relative",
-            width: "100%",
-            height: "80vh",
-            minHeight: 500
-          }}>
-            <iframe
-              src={magazine.pdfUrl}
+
+          {/* PDF Canvas Display */}
+          <div 
+            ref={containerRef}
+            style={{
+              position: "relative",
+              width: "100%",
+              minHeight: 500,
+              maxHeight: "80vh",
+              overflow: "auto",
+              background: "#f5f5f5",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "flex-start",
+              padding: "20px"
+            }}
+          >
+            {rendering && (
+              <div style={{
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                background: "rgba(255,255,255,0.9)",
+                padding: "20px",
+                borderRadius: 8,
+                boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
+                zIndex: 10
+              }}>
+                <div className="spinner" style={{
+                  border: "4px solid #f3f3f3",
+                  borderTop: "4px solid #481010ff",
+                  borderRadius: "50%",
+                  width: 40,
+                  height: 40,
+                  animation: "spin 1s linear infinite",
+                  margin: "0 auto"
+                }}></div>
+                <style>
+                  {`
+                    @keyframes spin {
+                      0% { transform: rotate(0deg); }
+                      100% { transform: rotate(360deg); }
+                    }
+                  `}
+                </style>
+                <p style={{ marginTop: 12, fontSize: 14 }}>Loading page...</p>
+              </div>
+            )}
+            
+            <canvas 
+              ref={canvasRef}
               style={{
-                width: "100%",
-                height: "100%",
-                border: "none"
+                boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
+                background: "#fff",
+                maxWidth: "100%",
+                height: "auto"
               }}
-              title="School Magazine PDF"
             />
           </div>
+
+          {/* Page Navigation Footer */}
+          {totalPages > 0 && (
+            <div style={{
+              background: "#f5f5f5",
+              padding: "12px 16px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: 8,
+              borderTop: "1px solid #ddd"
+            }}>
+              <button
+                onClick={() => setCurrentPage(1)}
+                disabled={currentPage === 1 || rendering}
+                style={{
+                  padding: "6px 12px",
+                  background: currentPage === 1 ? "#ddd" : "#fff",
+                  border: "1px solid #ccc",
+                  borderRadius: 4,
+                  cursor: currentPage === 1 ? "not-allowed" : "pointer",
+                  fontSize: 13
+                }}
+              >
+                First
+              </button>
+              
+              <input
+                type="number"
+                min="1"
+                max={totalPages}
+                value={currentPage}
+                onChange={(e) => {
+                  const page = parseInt(e.target.value);
+                  if (page >= 1 && page <= totalPages) {
+                    setCurrentPage(page);
+                  }
+                }}
+                style={{
+                  width: 60,
+                  padding: "6px",
+                  border: "1px solid #ccc",
+                  borderRadius: 4,
+                  textAlign: "center",
+                  fontSize: 13
+                }}
+              />
+              
+              <button
+                onClick={() => setCurrentPage(totalPages)}
+                disabled={currentPage === totalPages || rendering}
+                style={{
+                  padding: "6px 12px",
+                  background: currentPage === totalPages ? "#ddd" : "#fff",
+                  border: "1px solid #ccc",
+                  borderRadius: 4,
+                  cursor: currentPage === totalPages ? "not-allowed" : "pointer",
+                  fontSize: 13
+                }}
+              >
+                Last
+              </button>
+            </div>
+          )}
+
+          {/* Help Text */}
           <div style={{
             background: "#f5f5f5",
             padding: "8px 16px",
             fontSize: 12,
             color: "#666",
-            textAlign: "center"
+            textAlign: "center",
+            borderTop: "1px solid #ddd"
           }}>
-            If the PDF doesn't display properly, you can{" "}
+            Use the navigation buttons to browse pages, or{" "}
             <a
               href={magazine.pdfUrl}
               download
               style={{ color: "#481010ff", fontWeight: "bold" }}
             >
-              download it here
+              download the full PDF
             </a>
-            {" "}or{" "}
-            <a
-              href={magazine.pdfUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ color: "#481010ff", fontWeight: "bold" }}
-            >
-              open in a new tab
-            </a>
-            .
+            {" "}to read offline.
           </div>
         </div>
       )}
