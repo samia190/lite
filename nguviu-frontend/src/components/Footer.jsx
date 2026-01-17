@@ -349,6 +349,50 @@ export default function Footer() {
               ))}
             </ul>
           </div>
+
+          {/* SCHOOL MAGAZINE */}
+          <div className="footer-column">
+            <h4 className="footer-column-title">
+              <span role="img" aria-label="magazine">
+                📰
+              </span>
+              <span>School Magazine</span>
+            </h4>
+            <p style={{ fontSize: 14, color: "#666", marginBottom: 8 }}>
+              Read our latest school magazine
+            </p>
+            <a
+              href="#newsletter"
+              onClick={(e) => {
+                e.preventDefault();
+                if (window.setRoute) {
+                  window.setRoute("newsletter");
+                }
+              }}
+              className="footer-link"
+              style={{
+                display: "inline-block",
+                padding: "8px 16px",
+                background: "#481010ff",
+                color: "#fff",
+                borderRadius: 6,
+                textDecoration: "none",
+                fontSize: 14,
+                fontWeight: "bold",
+                transition: "all 0.2s ease",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "#6b1515";
+                e.currentTarget.style.transform = "translateY(-2px)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "#481010ff";
+                e.currentTarget.style.transform = "translateY(0)";
+              }}
+            >
+              View Magazine 📖
+            </a>
+          </div>
         </div>
       </footer>
     </>

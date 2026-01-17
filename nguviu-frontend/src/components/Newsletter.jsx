@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { get } from "../utils/api";
 import EditableFileList from "./EditableFileList";
 import Loader from "./Loader";
+import SchoolMagazineViewer from "./SchoolMagazineViewer";
 
 const postsWrapperStyle = {
   display: "flex",
@@ -162,6 +163,27 @@ export default function Newsletter() {
           </div>
         </section>
       )}
+
+      {/* SCHOOL MAGAZINE SECTION */}
+      <section style={{
+        marginTop: "1.5rem",
+        padding: "1.5rem",
+        background: "linear-gradient(135deg, #fff5f5 0%, #fef2f2 100%)",
+        borderRadius: 12,
+        border: "2px solid #481010ff",
+        boxShadow: "0 4px 6px rgba(72, 16, 16, 0.1)"
+      }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
+          <span style={{ fontSize: 32 }}>📖</span>
+          <h2 style={{ margin: 0 }}>School Magazine</h2>
+        </div>
+        
+        <p style={{ marginBottom: 16, color: "#555" }}>
+          Read our latest school magazine featuring student achievements, events, articles, and more!
+        </p>
+
+        <SchoolMagazineViewer />
+      </section>
 
       {/* ATTACHMENTS / MEDIA (IMAGES, VIDEOS, DOCS) */}
       {attachments.length > 0 && (

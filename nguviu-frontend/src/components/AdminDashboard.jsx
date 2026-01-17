@@ -22,6 +22,7 @@ import ParentsManagement from "./ParentsManagement";
 import StudentsManagement from "./StudentsManagement";
 import StaffManagement from "./StaffManagement";
 import RoleManagement from "./RoleManagement";
+import MagazineManagement from "./MagazineManagement";
 
 import { get, patch } from "../utils/api";
 import PageBackgroundManagement from "./PageBackgroundManagement";
@@ -124,6 +125,7 @@ export default function AdminDashboard({ user }) {
     "admissions",
     "feeStructure",
     "newsletters",
+    "magazine",
     "events",
     "gallery",
     "legal",
@@ -181,6 +183,7 @@ export default function AdminDashboard({ user }) {
                   admissions: "Admissions",
                   feeStructure: "Fee Structure",
                   newsletters: "Newsletters",
+                  magazine: "School Magazine",
                   events: "Events",
                   gallery: "Gallery",
                   legal: "Legal",
@@ -338,6 +341,8 @@ export default function AdminDashboard({ user }) {
         {activeSection === "feeStructure" && <FeeStructureManagement />}
 
         {activeSection === "newsletters" && <NewslettersManagement />}
+
+        {activeSection === "magazine" && <MagazineManagement user={user} />}
 
         {activeSection === "events" && <EventsManagement />}
 

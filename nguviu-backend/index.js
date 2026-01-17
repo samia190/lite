@@ -25,6 +25,7 @@ import submitFormRoutes from "./routes/submitForm.js";
 import studentVerificationRoutes from "./routes/studentVerification.js";
 import resultsRoutes from "./routes/results.js";
 import performanceRoutes from "./routes/performance.js";
+import schoolMagazineRoutes from "./routes/schoolMagazine.js";
 
 // Initialize the Express app
 const app = express();
@@ -147,6 +148,7 @@ app.use("/api/footer-links", footerLinksRoutes);
 app.use("/api/student-verification", studentVerificationRoutes);
 app.use("/api/results", resultsRoutes);
 app.use("/api/performance", performanceRoutes);
+app.use("/api/school-magazine", schoolMagazineRoutes);
 
 // MongoDB connection setup — attempt to connect but don't crash the server
 const mongoUri =
