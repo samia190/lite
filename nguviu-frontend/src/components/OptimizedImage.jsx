@@ -37,18 +37,9 @@ export default function OptimizedImage({
 
   // Generate responsive srcset for different screen sizes
   const generateSrcSet = (originalSrc) => {
-    if (!originalSrc) return undefined;
-    
-    // Only generate srcset for valid image paths
-    if (!originalSrc.match(/\.(jpg|jpeg|png|webp)$/i)) {
-      return undefined;
-    }
-    
-    const base = originalSrc.replace(/\.[^.]+$/, '');
-    const ext = originalSrc.match(/\.[^.]+$/)?.[0] || '';
-    
-    // Create srcset for 1x, 2x displays - properly formatted
-    return `${originalSrc} 1x, ${base}@2x${ext} 2x`;
+    // Disable srcset generation to avoid broken image references
+    // Only return the original source
+    return undefined;
   };
 
   const handleLoad = () => {

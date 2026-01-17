@@ -179,6 +179,15 @@ router.post("/verify-and-fetch", requireAuth, async (req, res) => {
     const latestResult = results[0];
     const hasHistory = results.length > 1;
     
+    // Add performance analysis to latest result
+    if (latestResult && student._id) {
+      const performanceData = await analyzePerformance(student._id, latestResult);
+      latestResult._doc = {
+        ...latestResult._doc,
+        ...performanceData
+      };
+    }
+    
     return res.json({
       success: true,
       student: {
@@ -307,6 +316,10 @@ router.post("/admin/create", requireRole('admin'), async (req, res) => {
 // Upload PDF result (ADMIN only)
 router.post("/admin/upload-pdf", requireRole('admin'), upload.single('pdf'), async (req, res) => {
   try {
+    console.log("PDF Upload request received");
+    console.log("File:", req.file);
+    console.log("Body:", req.body);
+    
     if (!req.file) {
       return res.status(400).json({ error: "No PDF file uploaded" });
     }
@@ -367,13 +380,20 @@ router.post("/admin/upload-pdf", requireRole('admin'), upload.single('pdf'), asy
 
   } catch (err) {
     console.error("Upload PDF error:", err);
+    console.error("Error stack:", err.stack);
     // Clean up uploaded file on error
     if (req.file) {
       try {
         fs.unlinkSync(req.file.path);
-      } catch (e) {}
+      } catch (e) {
+        console.error("Failed to delete file:", e);
+      }
     }
-    return res.status(500).json({ error: "Failed to upload PDF result" });
+    return res.status(500).json({ 
+      error: "Failed to upload PDF result",
+      message: err.message,
+      details: process.env.NODE_ENV === 'development' ? err.stack : undefined
+    });
   }
 });
 

@@ -20,8 +20,8 @@
   },
   "dependencies": {
     "jsbarcode": "^3.12.3",
-    "jspdf": "^4.0.0",
-    "jspdf-autotable": "^5.0.7",
+    "jspdf": "^2.5.2",
+    "jspdf-autotable": "^3.8.4",
     "multer": "^2.0.2",
     "qrcode": "^1.5.4",
     "react": "^18.2.0",

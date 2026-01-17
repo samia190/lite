@@ -626,7 +626,7 @@ const StudentResults = ({ user }) => {
             </div>
 
             {/* Performance Insights Panel */}
-            {(latestResult.performanceChange !== undefined || latestResult.weakSubjects?.length > 0 || latestResult.strongSubjects?.length > 0 || latestResult.improvementAreas?.length > 0) && (
+            {latestResult.subjects && latestResult.subjects.length > 0 && (
               <div style={{
                 background: "linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%)",
                 border: "1px solid #bbdefb",
