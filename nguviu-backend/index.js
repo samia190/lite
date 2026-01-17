@@ -77,7 +77,10 @@ app.use(
 );
 
 console.log("CORS allowed origins:", allowedOrigins.length ? allowedOrigins : "(all)");
-app.use(express.json());
+
+// Body parser with larger limits for file uploads
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
 // Ensure static folders exist and are ready for use
 const uploadsDir = path.join(process.cwd(), "public", "uploads");

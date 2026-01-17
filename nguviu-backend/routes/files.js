@@ -15,7 +15,12 @@ const uploadsDir = path.join(process.cwd(), "public", "uploads");
 if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
 
 // Use memory storage so we can optionally push to S3 or write to disk
-const upload = multer({ storage: multer.memoryStorage() });
+const upload = multer({ 
+  storage: multer.memoryStorage(),
+  limits: {
+    fileSize: 50 * 1024 * 1024, // 50MB max
+  }
+});
 
 // helper: build absolute url
 function toAbsoluteUrl(req, relativePath) {
@@ -27,6 +32,68 @@ function toAbsoluteUrl(req, relativePath) {
     `${req.protocol}://${req.get("host")}`; // e.g. http://
   return `${origin}${relativePath}`;
 }
+
+// ✅ POST: single file upload for magazine/general purposes
+router.post("/upload", upload.single("file"), async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ error: "No file uploaded" });
+    }
+
+    const useS3 = isS3Enabled();
+    let storedUrl;
+    let storedFilename = req.file.originalname;
+
+    if (useS3) {
+      const uploaded = await uploadBufferToS3(req.file.buffer, req.file.originalname, req.file.mimetype);
+      storedUrl = uploaded.url;
+      storedFilename = uploaded.key;
+    } else {
+      const saved = saveBufferToDisk(req.file.buffer, req.file.originalname, uploadsDir);
+      storedUrl = saved.url;
+      storedFilename = saved.filename;
+    }
+
+    // Check if DB is available
+    const dbUnavailable = mongoose.connection.readyState !== 1;
+    
+    if (dbUnavailable) {
+      // Return file info without saving to DB
+      return res.json({
+        id: `transient-${Date.now()}-${Math.floor(Math.random()*10000)}`,
+        originalName: req.file.originalname,
+        filename: storedFilename,
+        url: toAbsoluteUrl(req, storedUrl),
+        path: storedUrl,
+        uploadedAt: new Date(),
+        warning: "DB unavailable; file not persisted to database"
+      });
+    }
+
+    // Save to database
+    const doc = await File.create({
+      originalName: req.file.originalname,
+      filename: storedFilename,
+      url: storedUrl,
+      level: req.body.level || "",
+      subject: req.body.subject || "",
+      notes: req.body.notes || "",
+      type: req.body.type || "",
+    });
+
+    return res.json({
+      id: doc._id,
+      originalName: doc.originalName,
+      filename: doc.filename,
+      url: toAbsoluteUrl(req, doc.url),
+      path: doc.url,
+      uploadedAt: doc.uploadedAt,
+    });
+  } catch (err) {
+    console.error("Upload error:", err);
+    return res.status(500).json({ error: "Upload failed", details: err.message });
+  }
+});
 
 // ✅ POST: upload student homework
 router.post("/", upload.array("attachments", 10), async (req, res) => {

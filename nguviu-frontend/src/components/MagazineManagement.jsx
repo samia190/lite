@@ -77,21 +77,39 @@ export default function MagazineManagement({ user }) {
     formData.append('file', file);
     formData.append('type', type);
 
+    console.log(`Uploading ${type}:`, file.name, `Size: ${(file.size / 1024 / 1024).toFixed(2)}MB`);
+
     const token = localStorage.getItem("token");
-    const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/files/upload`, {
-      method: "POST",
-      headers: {
-        Authorization: token ? `Bearer ${token}` : "",
-      },
-      body: formData
-    });
+    const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+    const uploadUrl = `${apiUrl}/api/files/upload`;
+    
+    console.log('Upload URL:', uploadUrl);
 
-    if (!response.ok) {
-      throw new Error(`Failed to upload ${type}`);
+    try {
+      const response = await fetch(uploadUrl, {
+        method: "POST",
+        headers: {
+          Authorization: token ? `Bearer ${token}` : "",
+        },
+        body: formData
+      });
+
+      console.log('Upload response status:', response.status);
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Upload error response:', errorText);
+        throw new Error(`Failed to upload ${type}: ${response.status} ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      console.log('Upload success:', data);
+      
+      return data.url || data.path;
+    } catch (err) {
+      console.error(`Upload ${type} error:`, err);
+      throw err;
     }
-
-    const data = await response.json();
-    return data.url || data.path;
   }
 
   async function handleSubmit(e) {
@@ -113,19 +131,26 @@ export default function MagazineManagement({ user }) {
 
       // Upload PDF if new file selected
       if (selectedPdfFile) {
+        console.log('Starting PDF upload...');
         pdfUrl = await uploadFile(selectedPdfFile, 'pdf');
+        console.log('PDF uploaded successfully:', pdfUrl);
       }
 
       // Upload cover image if new file selected
       if (selectedCoverFile) {
+        console.log('Starting cover image upload...');
         coverUrl = await uploadFile(selectedCoverFile, 'image');
+        console.log('Cover image uploaded successfully:', coverUrl);
       }
 
       setUploading(false);
 
+      console.log('Submitting magazine data...');
+      
       // Submit magazine data
       const token = localStorage.getItem("token");
-      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/school-magazine`, {
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+      const response = await fetch(`${apiUrl}/api/school-magazine`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -138,11 +163,17 @@ export default function MagazineManagement({ user }) {
         })
       });
 
+      console.log('Magazine save response status:', response.status);
+
       if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Magazine save error:', errorText);
         throw new Error("Failed to save magazine");
       }
 
       const result = await response.json();
+      console.log('Magazine saved successfully:', result);
+      
       setSuccess(formData._id ? "Magazine updated successfully!" : "Magazine created successfully!");
       
       // Reset form
@@ -163,8 +194,9 @@ export default function MagazineManagement({ user }) {
       setSaving(false);
     } catch (err) {
       console.error("Error saving magazine:", err);
-      setError("Failed to save magazine");
+      setError(`Failed to save magazine: ${err.message}`);
       setSaving(false);
+      setUploading(false);
     }
   }
 
