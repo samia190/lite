@@ -26,6 +26,8 @@ A complete school magazine feature has been added to your website with the follo
 - 🎨 **Cover Image** - Optional magazine cover display
 - 📝 **Metadata** - Title, issue, date, description
 - 👤 **Admin Management** - Full CRUD operations
+- 📁 **File Picker** - Easy selection from uploaded files (no manual URLs!)
+- 🖼️ **Image Gallery** - Visual cover image selection
 
 ## 🚀 How to Use
 
@@ -51,15 +53,27 @@ A complete school magazine feature has been added to your website with the follo
    - Login as admin
    - Go to Admin Dashboard
    - Click "School Magazine" in left menu
-   - Upload your PDF first (use Files/Media manager)
-   - Copy the PDF URL
+   
+   Step 1: Upload Files
+   - First, upload your PDF and cover image using Files/Media manager
+   
+   Step 2: Create Magazine Entry
    - Fill in the form:
      * Title: "School Magazine"
      * Issue: "January 2026 Edition"
      * Publication Date: Select date
      * Description: Brief description
-     * PDF URL: Paste the URL from file upload
-     * Cover Image URL: (Optional) Upload cover image and paste URL
+   
+   Step 3: Select PDF
+   - Click "📁 Select PDF from Files" button
+   - Choose your PDF from the list of uploaded files
+   - The PDF will be automatically linked
+   
+   Step 4: Select Cover (Optional)
+   - Click "🖼️ Select Cover Image from Files" button
+   - Choose an image from the gallery
+   - Cover image will be automatically linked
+   
    - Click "Create Magazine"
    ```
 
@@ -93,13 +107,16 @@ nguviu-frontend/
 ## 💡 Best Practices
 
 ### 1. **PDF Upload:**
-- Upload PDFs to your server first (via Admin → Files/Media)
+- First, upload PDFs via Admin → Files/Media manager
+- Then select from the file picker in Magazine Management
+- No need to copy/paste URLs manually
 - Keep PDF file size reasonable (<10MB recommended)
 - Use descriptive filenames: `school-magazine-jan-2026.pdf`
 
 ### 2. **Cover Images:**
-- Optional but recommended
-- Use 150x200px or similar ratio
+- Upload images via Admin → Files/Media manager
+- Select from the visual image gallery
+- Recommended size: 150x200px or similar ratio
 - Formats: JPG, PNG, WebP
 - Keep file size small (<500KB)
 
@@ -173,10 +190,18 @@ The magazine feature is fully responsive:
   - Refresh the page
   - Check browser console
 
-### Upload Fails:
-- **Issue**: Error when creating magazine
+### Upload you've selected a PDF file using the file picker
+  - Check you're logged in as admin
+  - Verify files are uploaded to Files/Media first
+  - Verify backend server is running
+  - Check network tab for API errors
+
+### No PDF Files in Picker:
+- **Issue**: "No PDF files found" message
 - **Solution**:
-  - Ensure PDF URL is valid
+  - Upload PDF files via Admin → Files/Media manager first
+  - Refresh the magazine management page
+  - Check file extension is .pdf
   - Check you're logged in as admin
   - Verify backend server is running
   - Check network tab for API errors
@@ -204,18 +229,18 @@ Possible additions:
 - [ ] Comments/feedback section
 - [ ] Share on social media
 - [ ] Email subscription for new issues
-- [ ] Magazine categories/sections
-- [ ] Print-friendly version
-
-## ✨ Example Usage
-
-### Example 1: Monthly Magazine
+- [: Select from file picker (school-magazine-jan-2026.pdf)
+Cover: Select from image gallery (magazine-jan-2026-cover.jpg)
 ```
-Title: "NGUVIU GIRLS School Magazine"
-Issue: "January 2026 Edition"
-Date: 2026-01-17
-Description: "Featuring student achievements, upcoming events, and more!"
-PDF URL: "/uploads/magazine-jan-2026.pdf"
+
+### Example 2: Annual Yearbook
+```
+Title: "2026 Yearbook"
+Issue: "Annual Edition"
+Date: 2026-12-31
+Description: "A celebration of the 2026 academic year."
+PDF: Select from file picker (yearbook-2026.pdf)
+Cover: Select from image gallery (yearbook-2026-cover.jpg)
 Cover Image: "/uploads/magazine-jan-2026-cover.jpg"
 ```
 

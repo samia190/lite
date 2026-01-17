@@ -7,6 +7,9 @@ export default function MagazineManagement({ user }) {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [availableFiles, setAvailableFiles] = useState([]);
+  const [showPdfPicker, setShowPdfPicker] = useState(false);
+  const [showCoverPicker, setShowCoverPicker] = useState(false);
   
   // Form state
   const [formData, setFormData] = useState({
@@ -21,6 +24,7 @@ export default function MagazineManagement({ user }) {
 
   useEffect(() => {
     fetchMagazines();
+    fetchFiles();
   }, []);
 
   async function fetchMagazines() {
@@ -34,6 +38,19 @@ export default function MagazineManagement({ user }) {
       console.error("Failed to load magazines:", err);
       setError("Failed to load magazines");
       setLoading(false);
+    }
+  }
+
+  async function fetchFiles() {
+    try {
+      const data = await get("/api/files");
+      if (Array.isArray(data)) {
+        setAvailableFiles(data);
+      } else if (Array.isArray(data?.files)) {
+        setAvailableFiles(data.files);
+      }
+    } catch (err) {
+      console.error("Failed to load files:", err);
     }
   }
 
@@ -139,7 +156,40 @@ export default function MagazineManagement({ user }) {
     });
     setError("");
     setSuccess("");
+    setShowPdfPicker(false);
+    setShowCoverPicker(false);
   }
+
+  function selectPdfFile(file) {
+    setFormData({ ...formData, pdfUrl: file.downloadUrl || file.url });
+    setShowPdfPicker(false);
+  }
+
+  function selectCoverFile(file) {
+    setFormData({ ...formData, coverImage: file.downloadUrl || file.url });
+    setShowCoverPicker(false);
+  }
+
+  function getFileExtension(filename) {
+    const qIndex = filename.indexOf("?");
+    const clean = qIndex === -1 ? filename : filename.slice(0, qIndex);
+    const dot = clean.lastIndexOf(".");
+    if (dot === -1) return "";
+    return clean.slice(dot).toLowerCase();
+  }
+
+  function isPdfFile(file) {
+    const ext = getFileExtension(file.url || file.downloadUrl || "");
+    return ext === ".pdf";
+  }
+
+  function isImageFile(file) {
+    const ext = getFileExtension(file.url || file.downloadUrl || "");
+    return [".jpg", ".jpeg", ".png", ".gif", ".webp", ".bmp"].includes(ext);
+  }
+
+  const pdfFiles = availableFiles.filter(isPdfFile);
+  const imageFiles = availableFiles.filter(isImageFile);
 
   if (user?.role !== "admin") {
     return (
@@ -275,11 +325,315 @@ export default function MagazineManagement({ user }) {
 
           <div style={{ marginBottom: "1rem" }}>
             <label style={{ display: "block", fontWeight: "bold", marginBottom: 4 }}>
-              PDF URL * (Upload your PDF and paste the URL here)
+              Magazine PDF File *
             </label>
-            <input
-              type="url"
-              value={formData.pdfUrl}
+            
+            {formData.pdfUrl ? (
+              <div style={{
+                padding: "12px",
+                background: "#e8f5e9",
+                border: "2px solid #4caf50",
+                borderRadius: 6,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between"
+              }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                  <span style={{ fontSize: 24 }}>📄</span>
+                  <div>
+                    <div style={{ fontWeight: "bold", color: "#2e7d32" }}>PDF Selected</div>
+                    <small style={{ color: "#555", wordBreak: "break-all" }}>{formData.pdfUrl}</small>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setFormData({ ...formData, pdfUrl: "" })}
+                  style={{
+                    padding: "6px 12px",
+                    background: "#f44336",
+                    color: "#fff",
+                    border: "none",
+                    borderRadius: 4,
+                    cursor: "pointer",
+                    fontSize: 14
+                  }}
+                >
+                  Remove
+                </button>
+              </div>
+            ) : (
+              <button
+                type="button"
+                onClick={() => setShowPdfPicker(!showPdfPicker)}
+                style={{
+                  width: "100%",
+                  padding: "16px",
+                  background: "#fff",
+                  border: "2px dashed #481010ff",
+                  borderRadius: 6,
+                  cursor: "pointer",
+                  fontSize: 16,
+                  color: "#481010ff",
+                  fontWeight: "bold",
+                  transition: "all 0.2s ease"
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = "#fff5f5";
+                  e.currentTarget.style.borderColor = "#6b1515";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = "#fff";
+                  e.currentTarget.style.borderColor = "#481010ff";
+                }}
+              >
+                📁 Select PDF from Files
+              </button>
+            )}
+
+            {showPdfPicker && (
+              <div style={{
+                marginTop: 12,
+                padding: "1rem",
+                background: "#f9f9f9",
+                border: "1px solid #ddd",
+                borderRadius: 6,
+                maxHeight: 300,
+                overflowY: "auto"
+              }}>
+                <div style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  marginBottom: 12
+                }}>
+                  <strong>Select a PDF file:</strong>
+                  <button
+                    type="button"
+                    onClick={() => setShowPdfPicker(false)}
+                    style={{
+                      padding: "4px 8px",
+                      background: "#666",
+                      color: "#fff",
+                      border: "none",
+                      borderRadius: 4,
+                      cursor: "pointer",
+                      fontSize: 12
+                    }}
+                  >
+                    Close
+                  </button>
+                </div>
+                
+                {pdfFiles.length === 0 ? (
+                  <p style={{ color: "#666", fontStyle: "italic" }}>
+                    No PDF files found. Please upload a PDF file first using the Files/Media manager.
+                  </p>
+                ) : (
+                  <div style={{ display: "grid", gap: 8 }}>
+                    {pdfFiles.map((file) => (
+                      <div
+                        key={file._id || file.id}
+                        onClick={() => selectPdfFile(file)}
+                        style={{
+                          padding: "10px",
+                          background: "#fff",
+                          border: "1px solid #ddd",
+                          borderRadius: 4,
+                          cursor: "pointer",
+                          display: "flex",
+                          alignItems: "center",
+                          gap: 8,
+                          transition: "all 0.2s ease"
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.background = "#e3f2fd";
+                          e.currentTarget.style.borderColor = "#2196F3";
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.background = "#fff";
+                          e.currentTarget.style.borderColor = "#ddd";
+                        }}
+                      >
+                        <span style={{ fontSize: 20 }}>📄</span>
+                        <div style={{ flex: 1 }}>
+                          <div style={{ fontWeight: "bold", fontSize: 14 }}>
+                            {file.originalName || file.name || "Untitled"}
+                          </div>
+                          <small style={{ color: "#666" }}>
+                            {file.url || file.downloadUrl}
+                          </small>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+
+          <div style={{ marginBottom: "1rem" }}>
+            <label style={{ display: "block", fontWeight: "bold", marginBottom: 4 }}>
+              Cover Image (Optional)
+            </label>
+            
+            {formData.coverImage ? (
+              <div style={{
+                padding: "12px",
+                background: "#e8f5e9",
+                border: "2px solid #4caf50",
+                borderRadius: 6,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between"
+              }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                  <img
+                    src={formData.coverImage}
+                    alt="Cover preview"
+                    style={{
+                      width: 60,
+                      height: 80,
+                      objectFit: "cover",
+                      borderRadius: 4,
+                      border: "1px solid #ddd"
+                    }}
+                  />
+                  <div>
+                    <div style={{ fontWeight: "bold", color: "#2e7d32" }}>Cover Image Selected</div>
+                    <small style={{ color: "#555", wordBreak: "break-all" }}>{formData.coverImage}</small>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setFormData({ ...formData, coverImage: "" })}
+                  style={{
+                    padding: "6px 12px",
+                    background: "#f44336",
+                    color: "#fff",
+                    border: "none",
+                    borderRadius: 4,
+                    cursor: "pointer",
+                    fontSize: 14
+                  }}
+                >
+                  Remove
+                </button>
+              </div>
+            ) : (
+              <button
+                type="button"
+                onClick={() => setShowCoverPicker(!showCoverPicker)}
+                style={{
+                  width: "100%",
+                  padding: "16px",
+                  background: "#fff",
+                  border: "2px dashed #666",
+                  borderRadius: 6,
+                  cursor: "pointer",
+                  fontSize: 16,
+                  color: "#666",
+                  fontWeight: "bold",
+                  transition: "all 0.2s ease"
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = "#f5f5f5";
+                  e.currentTarget.style.borderColor = "#333";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = "#fff";
+                  e.currentTarget.style.borderColor = "#666";
+                }}
+              >
+                🖼️ Select Cover Image from Files
+              </button>
+            )}
+
+            {showCoverPicker && (
+              <div style={{
+                marginTop: 12,
+                padding: "1rem",
+                background: "#f9f9f9",
+                border: "1px solid #ddd",
+                borderRadius: 6,
+                maxHeight: 300,
+                overflowY: "auto"
+              }}>
+                <div style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  marginBottom: 12
+                }}>
+                  <strong>Select a cover image:</strong>
+                  <button
+                    type="button"
+                    onClick={() => setShowCoverPicker(false)}
+                    style={{
+                      padding: "4px 8px",
+                      background: "#666",
+                      color: "#fff",
+                      border: "none",
+                      borderRadius: 4,
+                      cursor: "pointer",
+                      fontSize: 12
+                    }}
+                  >
+                    Close
+                  </button>
+                </div>
+                
+                {imageFiles.length === 0 ? (
+                  <p style={{ color: "#666", fontStyle: "italic" }}>
+                    No image files found. Please upload an image first using the Files/Media manager.
+                  </p>
+                ) : (
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(120px, 1fr))", gap: 8 }}>
+                    {imageFiles.map((file) => (
+                      <div
+                        key={file._id || file.id}
+                        onClick={() => selectCoverFile(file)}
+                        style={{
+                          cursor: "pointer",
+                          border: "2px solid #ddd",
+                          borderRadius: 4,
+                          overflow: "hidden",
+                          transition: "all 0.2s ease"
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.borderColor = "#2196F3";
+                          e.currentTarget.style.transform = "scale(1.05)";
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.borderColor = "#ddd";
+                          e.currentTarget.style.transform = "scale(1)";
+                        }}
+                      >
+                        <img
+                          src={file.url || file.downloadUrl}
+                          alt={file.originalName || file.name}
+                          style={{
+                            width: "100%",
+                            height: 120,
+                            objectFit: "cover"
+                          }}
+                        />
+                        <div style={{
+                          padding: "4px 6px",
+                          background: "#f5f5f5",
+                          fontSize: 11,
+                          textAlign: "center",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap"
+                        }}>
+                          {file.originalName || file.name || "Image"}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}value={formData.pdfUrl}
               onChange={(e) => setFormData({ ...formData, pdfUrl: e.target.value })}
               placeholder="https://example.com/magazine.pdf or /uploads/magazine.pdf"
               style={{
