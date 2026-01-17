@@ -5,11 +5,11 @@ export default function MagazineManagement({ user }) {
   const [magazines, setMagazines] = useState([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [uploading, setUploading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const [availableFiles, setAvailableFiles] = useState([]);
-  const [showPdfPicker, setShowPdfPicker] = useState(false);
-  const [showCoverPicker, setShowCoverPicker] = useState(false);
+  const [selectedPdfFile, setSelectedPdfFile] = useState(null);
+  const [selectedCoverFile, setSelectedCoverFile] = useState(null);
   
   // Form state
   const [formData, setFormData] = useState({
@@ -24,7 +24,6 @@ export default function MagazineManagement({ user }) {
 
   useEffect(() => {
     fetchMagazines();
-    fetchFiles();
   }, []);
 
   async function fetchMagazines() {
@@ -41,32 +40,90 @@ export default function MagazineManagement({ user }) {
     }
   }
 
-  async function fetchFiles() {
-    try {
-      const data = await get("/api/files");
-      if (Array.isArray(data)) {
-        setAvailableFiles(data);
-      } else if (Array.isArray(data?.files)) {
-        setAvailableFiles(data.files);
+  function handlePdfFileChange(e) {
+    const file = e.target.files[0];
+    if (file) {
+      if (file.type !== 'application/pdf') {
+        setError("Please select a PDF file");
+        return;
       }
-    } catch (err) {
-      console.error("Failed to load files:", err);
+      if (file.size > 50 * 1024 * 1024) { // 50MB limit
+        setError("PDF file size must be less than 50MB");
+        return;
+      }
+      setSelectedPdfFile(file);
+      setError("");
     }
+  }
+
+  function handleCoverFileChange(e) {
+    const file = e.target.files[0];
+    if (file) {
+      if (!file.type.startsWith('image/')) {
+        setError("Please select an image file");
+        return;
+      }
+      if (file.size > 5 * 1024 * 1024) { // 5MB limit
+        setError("Image file size must be less than 5MB");
+        return;
+      }
+      setSelectedCoverFile(file);
+      setError("");
+    }
+  }
+
+  async function uploadFile(file, type) {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('type', type);
+
+    const token = localStorage.getItem("token");
+    const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/files/upload`, {
+      method: "POST",
+      headers: {
+        Authorization: token ? `Bearer ${token}` : "",
+      },
+      body: formData
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to upload ${type}`);
+    }
+
+    const data = await response.json();
+    return data.url || data.path;
   }
 
   async function handleSubmit(e) {
     e.preventDefault();
     
-    if (!formData.pdfUrl) {
-      setError("PDF URL is required");
+    if (!selectedPdfFile && !formData.pdfUrl) {
+      setError("Please select a PDF file");
       return;
     }
 
     try {
       setSaving(true);
+      setUploading(true);
       setError("");
       setSuccess("");
 
+      let pdfUrl = formData.pdfUrl;
+      let coverUrl = formData.coverImage;
+
+      // Upload PDF if new file selected
+      if (selectedPdfFile) {
+        pdfUrl = await uploadFile(selectedPdfFile, 'pdf');
+      }
+
+      // Upload cover image if new file selected
+      if (selectedCoverFile) {
+        coverUrl = await uploadFile(selectedCoverFile, 'image');
+      }
+
+      setUploading(false);
+
+      // Submit magazine data
       const token = localStorage.getItem("token");
       const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/school-magazine`, {
         method: "POST",
@@ -74,7 +131,11 @@ export default function MagazineManagement({ user }) {
           "Content-Type": "application/json",
           Authorization: token ? `Bearer ${token}` : "",
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify({
+          ...formData,
+          pdfUrl,
+          coverImage: coverUrl
+        })
       });
 
       if (!response.ok) {
@@ -94,6 +155,8 @@ export default function MagazineManagement({ user }) {
         pdfUrl: "",
         coverImage: ""
       });
+      setSelectedPdfFile(null);
+      setSelectedCoverFile(null);
 
       // Refresh list
       fetchMagazines();
@@ -154,42 +217,11 @@ export default function MagazineManagement({ user }) {
       pdfUrl: "",
       coverImage: ""
     });
+    setSelectedPdfFile(null);
+    setSelectedCoverFile(null);
     setError("");
     setSuccess("");
-    setShowPdfPicker(false);
-    setShowCoverPicker(false);
   }
-
-  function selectPdfFile(file) {
-    setFormData({ ...formData, pdfUrl: file.downloadUrl || file.url });
-    setShowPdfPicker(false);
-  }
-
-  function selectCoverFile(file) {
-    setFormData({ ...formData, coverImage: file.downloadUrl || file.url });
-    setShowCoverPicker(false);
-  }
-
-  function getFileExtension(filename) {
-    const qIndex = filename.indexOf("?");
-    const clean = qIndex === -1 ? filename : filename.slice(0, qIndex);
-    const dot = clean.lastIndexOf(".");
-    if (dot === -1) return "";
-    return clean.slice(dot).toLowerCase();
-  }
-
-  function isPdfFile(file) {
-    const ext = getFileExtension(file.url || file.downloadUrl || "");
-    return ext === ".pdf";
-  }
-
-  function isImageFile(file) {
-    const ext = getFileExtension(file.url || file.downloadUrl || "");
-    return [".jpg", ".jpeg", ".png", ".gif", ".webp", ".bmp"].includes(ext);
-  }
-
-  const pdfFiles = availableFiles.filter(isPdfFile);
-  const imageFiles = availableFiles.filter(isImageFile);
 
   if (user?.role !== "admin") {
     return (
@@ -325,10 +357,10 @@ export default function MagazineManagement({ user }) {
 
           <div style={{ marginBottom: "1rem" }}>
             <label style={{ display: "block", fontWeight: "bold", marginBottom: 4 }}>
-              Magazine PDF File *
+              Magazine PDF File * <span style={{ color: '#666', fontWeight: 'normal', fontSize: 14 }}>(Max 50MB)</span>
             </label>
             
-            {formData.pdfUrl ? (
+            {selectedPdfFile || formData.pdfUrl ? (
               <div style={{
                 padding: "12px",
                 background: "#e8f5e9",
@@ -341,13 +373,25 @@ export default function MagazineManagement({ user }) {
                 <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                   <span style={{ fontSize: 24 }}>📄</span>
                   <div>
-                    <div style={{ fontWeight: "bold", color: "#2e7d32" }}>PDF Selected</div>
-                    <small style={{ color: "#555", wordBreak: "break-all" }}>{formData.pdfUrl}</small>
+                    <div style={{ fontWeight: "bold", color: "#2e7d32" }}>
+                      {selectedPdfFile ? selectedPdfFile.name : "PDF Selected"}
+                    </div>
+                    {selectedPdfFile && (
+                      <small style={{ color: "#555" }}>
+                        {(selectedPdfFile.size / 1024 / 1024).toFixed(2)} MB
+                      </small>
+                    )}
+                    {formData.pdfUrl && !selectedPdfFile && (
+                      <small style={{ color: "#555", wordBreak: "break-all" }}>{formData.pdfUrl}</small>
+                    )}
                   </div>
                 </div>
                 <button
                   type="button"
-                  onClick={() => setFormData({ ...formData, pdfUrl: "" })}
+                  onClick={() => {
+                    setSelectedPdfFile(null);
+                    setFormData({ ...formData, pdfUrl: "" });
+                  }}
                   style={{
                     padding: "6px 12px",
                     background: "#f44336",
@@ -362,121 +406,54 @@ export default function MagazineManagement({ user }) {
                 </button>
               </div>
             ) : (
-              <button
-                type="button"
-                onClick={() => setShowPdfPicker(!showPdfPicker)}
-                style={{
-                  width: "100%",
-                  padding: "16px",
-                  background: "#fff",
-                  border: "2px dashed #481010ff",
-                  borderRadius: 6,
-                  cursor: "pointer",
-                  fontSize: 16,
-                  color: "#481010ff",
-                  fontWeight: "bold",
-                  transition: "all 0.2s ease"
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = "#fff5f5";
-                  e.currentTarget.style.borderColor = "#6b1515";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = "#fff";
-                  e.currentTarget.style.borderColor = "#481010ff";
-                }}
-              >
-                📁 Select PDF from Files
-              </button>
-            )}
-
-            {showPdfPicker && (
-              <div style={{
-                marginTop: 12,
-                padding: "1rem",
-                background: "#f9f9f9",
-                border: "1px solid #ddd",
-                borderRadius: 6,
-                maxHeight: 300,
-                overflowY: "auto"
-              }}>
-                <div style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  marginBottom: 12
-                }}>
-                  <strong>Select a PDF file:</strong>
-                  <button
-                    type="button"
-                    onClick={() => setShowPdfPicker(false)}
-                    style={{
-                      padding: "4px 8px",
-                      background: "#666",
-                      color: "#fff",
-                      border: "none",
-                      borderRadius: 4,
-                      cursor: "pointer",
-                      fontSize: 12
-                    }}
-                  >
-                    Close
-                  </button>
-                </div>
-                
-                {pdfFiles.length === 0 ? (
-                  <p style={{ color: "#666", fontStyle: "italic" }}>
-                    No PDF files found. Please upload a PDF file first using the Files/Media manager.
-                  </p>
-                ) : (
-                  <div style={{ display: "grid", gap: 8 }}>
-                    {pdfFiles.map((file) => (
-                      <div
-                        key={file._id || file.id}
-                        onClick={() => selectPdfFile(file)}
-                        style={{
-                          padding: "10px",
-                          background: "#fff",
-                          border: "1px solid #ddd",
-                          borderRadius: 4,
-                          cursor: "pointer",
-                          display: "flex",
-                          alignItems: "center",
-                          gap: 8,
-                          transition: "all 0.2s ease"
-                        }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.background = "#e3f2fd";
-                          e.currentTarget.style.borderColor = "#2196F3";
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.background = "#fff";
-                          e.currentTarget.style.borderColor = "#ddd";
-                        }}
-                      >
-                        <span style={{ fontSize: 20 }}>📄</span>
-                        <div style={{ flex: 1 }}>
-                          <div style={{ fontWeight: "bold", fontSize: 14 }}>
-                            {file.originalName || file.name || "Untitled"}
-                          </div>
-                          <small style={{ color: "#666" }}>
-                            {file.url || file.downloadUrl}
-                          </small>
-                        </div>
-                      </div>
-                    ))}
+              <div>
+                <input
+                  type="file"
+                  id="pdfFileInput"
+                  accept=".pdf,application/pdf"
+                  onChange={handlePdfFileChange}
+                  style={{ display: 'none' }}
+                />
+                <label
+                  htmlFor="pdfFileInput"
+                  style={{
+                    display: "block",
+                    width: "100%",
+                    padding: "20px",
+                    background: "#fff",
+                    border: "2px dashed #481010ff",
+                    borderRadius: 6,
+                    cursor: "pointer",
+                    fontSize: 16,
+                    color: "#481010ff",
+                    fontWeight: "bold",
+                    textAlign: "center",
+                    transition: "all 0.2s ease"
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = "#fff5f5";
+                    e.currentTarget.style.borderColor = "#6b1515";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = "#fff";
+                    e.currentTarget.style.borderColor = "#481010ff";
+                  }}
+                >
+                  📁 Click to Select PDF from Your Computer
+                  <div style={{ fontSize: 14, fontWeight: 'normal', marginTop: 8, color: '#666' }}>
+                    Or drag and drop PDF file here
                   </div>
-                )}
+                </label>
               </div>
             )}
           </div>
 
           <div style={{ marginBottom: "1rem" }}>
             <label style={{ display: "block", fontWeight: "bold", marginBottom: 4 }}>
-              Cover Image (Optional)
+              Cover Image (Optional) <span style={{ color: '#666', fontWeight: 'normal', fontSize: 14 }}>(Max 5MB)</span>
             </label>
             
-            {formData.coverImage ? (
+            {selectedCoverFile || formData.coverImage ? (
               <div style={{
                 padding: "12px",
                 background: "#e8f5e9",
@@ -487,25 +464,48 @@ export default function MagazineManagement({ user }) {
                 justifyContent: "space-between"
               }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                  <img
-                    src={formData.coverImage}
-                    alt="Cover preview"
-                    style={{
-                      width: 60,
-                      height: 80,
-                      objectFit: "cover",
-                      borderRadius: 4,
-                      border: "1px solid #ddd"
-                    }}
-                  />
+                  {selectedCoverFile ? (
+                    <img
+                      src={URL.createObjectURL(selectedCoverFile)}
+                      alt="Cover preview"
+                      style={{
+                        width: 60,
+                        height: 80,
+                        objectFit: "cover",
+                        borderRadius: 4,
+                        border: "1px solid #ddd"
+                      }}
+                    />
+                  ) : formData.coverImage ? (
+                    <img
+                      src={formData.coverImage}
+                      alt="Cover preview"
+                      style={{
+                        width: 60,
+                        height: 80,
+                        objectFit: "cover",
+                        borderRadius: 4,
+                        border: "1px solid #ddd"
+                      }}
+                    />
+                  ) : null}
                   <div>
-                    <div style={{ fontWeight: "bold", color: "#2e7d32" }}>Cover Image Selected</div>
-                    <small style={{ color: "#555", wordBreak: "break-all" }}>{formData.coverImage}</small>
+                    <div style={{ fontWeight: "bold", color: "#2e7d32" }}>
+                      {selectedCoverFile ? selectedCoverFile.name : "Cover Image Selected"}
+                    </div>
+                    {selectedCoverFile && (
+                      <small style={{ color: "#555" }}>
+                        {(selectedCoverFile.size / 1024 / 1024).toFixed(2)} MB
+                      </small>
+                    )}
                   </div>
                 </div>
                 <button
                   type="button"
-                  onClick={() => setFormData({ ...formData, coverImage: "" })}
+                  onClick={() => {
+                    setSelectedCoverFile(null);
+                    setFormData({ ...formData, coverImage: "" });
+                  }}
                   style={{
                     padding: "6px 12px",
                     background: "#f44336",
@@ -520,126 +520,51 @@ export default function MagazineManagement({ user }) {
                 </button>
               </div>
             ) : (
-              <button
-                type="button"
-                onClick={() => setShowCoverPicker(!showCoverPicker)}
-                style={{
-                  width: "100%",
-                  padding: "16px",
-                  background: "#fff",
-                  border: "2px dashed #666",
-                  borderRadius: 6,
-                  cursor: "pointer",
-                  fontSize: 16,
-                  color: "#666",
-                  fontWeight: "bold",
-                  transition: "all 0.2s ease"
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = "#f5f5f5";
-                  e.currentTarget.style.borderColor = "#333";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = "#fff";
-                  e.currentTarget.style.borderColor = "#666";
-                }}
-              >
-                🖼️ Select Cover Image from Files
-              </button>
-            )}
-
-            {showCoverPicker && (
-              <div style={{
-                marginTop: 12,
-                padding: "1rem",
-                background: "#f9f9f9",
-                border: "1px solid #ddd",
-                borderRadius: 6,
-                maxHeight: 300,
-                overflowY: "auto"
-              }}>
-                <div style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  marginBottom: 12
-                }}>
-                  <strong>Select a cover image:</strong>
-                  <button
-                    type="button"
-                    onClick={() => setShowCoverPicker(false)}
-                    style={{
-                      padding: "4px 8px",
-                      background: "#666",
-                      color: "#fff",
-                      border: "none",
-                      borderRadius: 4,
-                      cursor: "pointer",
-                      fontSize: 12
-                    }}
-                  >
-                    Close
-                  </button>
-                </div>
-                
-                {imageFiles.length === 0 ? (
-                  <p style={{ color: "#666", fontStyle: "italic" }}>
-                    No image files found. Please upload an image first using the Files/Media manager.
-                  </p>
-                ) : (
-                  <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(120px, 1fr))", gap: 8 }}>
-                    {imageFiles.map((file) => (
-                      <div
-                        key={file._id || file.id}
-                        onClick={() => selectCoverFile(file)}
-                        style={{
-                          cursor: "pointer",
-                          border: "2px solid #ddd",
-                          borderRadius: 4,
-                          overflow: "hidden",
-                          transition: "all 0.2s ease"
-                        }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.borderColor = "#2196F3";
-                          e.currentTarget.style.transform = "scale(1.05)";
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.borderColor = "#ddd";
-                          e.currentTarget.style.transform = "scale(1)";
-                        }}
-                      >
-                        <img
-                          src={file.url || file.downloadUrl}
-                          alt={file.originalName || file.name}
-                          style={{
-                            width: "100%",
-                            height: 120,
-                            objectFit: "cover"
-                          }}
-                        />
-                        <div style={{
-                          padding: "4px 6px",
-                          background: "#f5f5f5",
-                          fontSize: 11,
-                          textAlign: "center",
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                          whiteSpace: "nowrap"
-                        }}>
-                          {file.originalName || file.name || "Image"}
-                        </div>
-                      </div>
-                    ))}
+              <div>
+                <input
+                  type="file"
+                  id="coverFileInput"
+                  accept="image/*"
+                  onChange={handleCoverFileChange}
+                  style={{ display: 'none' }}
+                />
+                <label
+                  htmlFor="coverFileInput"
+                  style={{
+                    display: "block",
+                    width: "100%",
+                    padding: "20px",
+                    background: "#fff",
+                    border: "2px dashed #666",
+                    borderRadius: 6,
+                    cursor: "pointer",
+                    fontSize: 16,
+                    color: "#666",
+                    fontWeight: "bold",
+                    textAlign: "center",
+                    transition: "all 0.2s ease"
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = "#f5f5f5";
+                    e.currentTarget.style.borderColor = "#333";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = "#fff";
+                    e.currentTarget.style.borderColor = "#666";
+                  }}
+                >
+                  🖼️ Click to Select Cover Image from Your Computer
+                  <div style={{ fontSize: 14, fontWeight: 'normal', marginTop: 8, color: '#666' }}>
+                    Or drag and drop image here
                   </div>
-                )}
+                </label>
               </div>
             )}
           </div>
-
           <div style={{ display: "flex", gap: 12 }}>
             <button
               type="submit"
-              disabled={saving}
+              disabled={saving || uploading}
               style={{
                 padding: "10px 24px",
                 background: saving ? "#ccc" : "#481010ff",
@@ -648,10 +573,11 @@ export default function MagazineManagement({ user }) {
                 borderRadius: 6,
                 fontSize: 16,
                 fontWeight: "bold",
-                cursor: saving ? "not-allowed" : "pointer"
+                cursor: (saving || uploading) ? "not-allowed" : "pointer",
+                opacity: (saving || uploading) ? 0.7 : 1
               }}
             >
-              {saving ? "Saving..." : (formData._id ? "Update Magazine" : "Create Magazine")}
+              {uploading ? "Uploading files..." : saving ? "Saving..." : (formData._id ? "Update Magazine" : "Create Magazine")}
             </button>
 
             {formData._id && (
