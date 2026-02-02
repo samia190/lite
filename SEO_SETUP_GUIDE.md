@@ -1,4 +1,4 @@
-# SEO Setup Guide for NGUVIU GIRLS School Website
+# SEO Setup Guide for KANGARU GIRLS School Website
 
 ## ✅ Completed Setup
 
@@ -87,7 +87,7 @@ Create `public/schema.json` with:
 {
   "@context": "https://schema.org",
   "@type": "EducationalOrganization",
-  "name": "NGUVIU GIRLS School",
+  "name": "KANGARU GIRLS School",
   "description": "Excellence in Education - A leading girls' school",
   "url": "https://your-domain.com",
   "logo": "https://your-domain.com/header/logo.PNG",
@@ -95,7 +95,7 @@ Create `public/schema.json` with:
     "@type": "ContactPoint",
     "contactType": "Admissions",
     "telephone": "+XXX-XXX-XXXX",
-    "email": "info@nguviugirls.school"
+    "email": "info@kangarugirls.school"
   },
   "address": {
     "@type": "PostalAddress",

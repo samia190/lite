@@ -30,8 +30,8 @@ if (-not $sharpInstalled) {
 # Define directories to process
 $scriptPath = Split-Path -Parent $MyInvocation.MyCommand.Path
 $rootPath = Split-Path -Parent $scriptPath
-$frontendPublic = Join-Path $rootPath "nguviu-frontend\public"
-$backendPublic = Join-Path $rootPath "nguviu-backend\public"
+$frontendPublic = Join-Path $rootPath "kangarufrontend\public"
+$backendPublic = Join-Path $rootPath "kangarubackend\public"
 
 $directories = @($frontendPublic, $backendPublic)
 

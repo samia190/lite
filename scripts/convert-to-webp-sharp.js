@@ -10,7 +10,7 @@ const path = require('path');
 const sharp = require('sharp');
 
 // Configuration
-const IMAGE_DIR = path.join(__dirname, '../nguviu-frontend/public/images');
+const IMAGE_DIR = path.join(__dirname, '../kangarufrontend/public/images');
 const WEBP_QUALITY = 85;
 const IMAGE_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.JPG', '.JPEG', '.PNG'];
 

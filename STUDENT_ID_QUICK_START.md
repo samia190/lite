@@ -15,13 +15,13 @@
 ## 📁 Files Created
 
 ### Backend:
-1. **`nguviu-backend/models/Student.js`**
+1. **`kangarubackend/models/Student.js`**
    - Student database model
    - Unique secret generation per student
    - Token generation with cryptographic signing
    - Token verification with security checks
 
-2. **`nguviu-backend/routes/studentVerification.js`**
+2. **`kangarubackend/routes/studentVerification.js`**
    - `/api/student-verification/verify` - Verify QR code (PUBLIC)
    - `/api/student-verification/students` - Manage students (ADMIN)
    - `/api/student-verification/generate-token/:id` - Generate QR (ADMIN)
@@ -29,14 +29,14 @@
    - `/api/student-verification/deactivate-card/:id` - Deactivate (ADMIN)
 
 ### Frontend:
-3. **`nguviu-frontend/src/components/StudentVerification.jsx`**
+3. **`kangarufrontend/src/components/StudentVerification.jsx`**
    - **Hidden page** - only accessible via QR scan
    - URL: `/#/verify-student?t=TOKEN`
    - Shows student details when valid
    - Shows error when invalid/expired/forged
    - **Locked page** - prevents navigation, right-click, F12
 
-4. **`nguviu-frontend/src/components/StudentIDManagement.jsx`**
+4. **`kangarufrontend/src/components/StudentIDManagement.jsx`**
    - Admin panel for student management
    - URL: `/#/student-id-management` (admin only)
    - Add students
@@ -52,7 +52,7 @@
 
 ### Step 1: Add Secret to Backend .env
 
-Add this line to `nguviu-backend/.env`:
+Add this line to `kangarubackend/.env`:
 
 ```env
 ID_CARD_SECRET=your-64-character-random-hex-string-here
@@ -71,7 +71,7 @@ a1b2c3d4e5f67890abcdef1234567890abcdef1234567890abcdef1234567890
 ### Step 2: Install QR Code Package
 
 ```bash
-cd nguviu-frontend
+cd kangarufrontend
 npm install qrcode
 ```
 

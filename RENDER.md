@@ -1,6 +1,6 @@
 # Render Deployment Guide
 
-Complete guide to deploy the Nguviu School full-stack application on Render.
+Complete guide to deploy the KANGARU GIRLSSchool full-stack application on Render.
 
 ## 🚀 Quick Start
 
@@ -18,7 +18,7 @@ Complete guide to deploy the Nguviu School full-stack application on Render.
 1. Go to [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
 2. Create a free cluster
 3. Create a database user
-4. Get your connection string: `mongodb+srv://username:password@cluster.mongodb.net/nguviu`
+4. Get your connection string: `mongodb+srv://username:password@cluster.mongodb.net/kangaru`
 5. Whitelist all IPs (`0.0.0.0/0`) in Network Access for Render
 
 ### 2. Deploy Backend API
@@ -34,10 +34,10 @@ Complete guide to deploy the Nguviu School full-stack application on Render.
 1. Click "New +" → "Web Service"
 2. Connect your GitHub repository
 3. Configure:
-   - **Name**: `nguviu-backend`
+   - **Name**: `kangarubackend`
    - **Region**: Oregon (or closest to you)
    - **Branch**: `main`
-   - **Root Directory**: `nguviu-backend`
+   - **Root Directory**: `kangarubackend`
    - **Runtime**: `Node`
    - **Build Command**: `npm install`
    - **Start Command**: `npm start`
@@ -47,7 +47,7 @@ Complete guide to deploy the Nguviu School full-stack application on Render.
    ```
    NODE_ENV=production
    PORT=4000
-   MONGO_URI=mongodb+srv://your-username:password@cluster.mongodb.net/nguviu
+   MONGO_URI=mongodb+srv://your-username:password@cluster.mongodb.net/kangaru
    JWT_SECRET=<generate-random-string>
    JWT_EXPIRES_IN=7d
    CORS_ORIGINS=https://your-frontend.onrender.com
@@ -64,23 +64,23 @@ Complete guide to deploy the Nguviu School full-stack application on Render.
    ```
 
 5. Click "Create Web Service"
-6. **Save the backend URL**: `https://nguviu-backend.onrender.com` (or your chosen name)
+6. **Save the backend URL**: `https://kangarubackend.onrender.com` (or your chosen name)
 
 ### 3. Deploy Frontend
 
 1. Click "New +" → "Static Site"
 2. Connect your GitHub repository
 3. Configure:
-   - **Name**: `nguviu-frontend`
+   - **Name**: `kangarufrontend`
    - **Region**: Oregon
    - **Branch**: `main`
-   - **Root Directory**: `nguviu-frontend`
+   - **Root Directory**: `kangarufrontend`
    - **Build Command**: `npm install && npm run build`
    - **Publish Directory**: `dist`
 
 4. **Environment Variables**:
    ```
-   VITE_API_URL=https://nguviu-backend.onrender.com
+   VITE_API_URL=https://kangarubackend.onrender.com
    ```
    ⚠️ **IMPORTANT**: Replace with your actual backend URL from step 2
 
@@ -88,13 +88,13 @@ Complete guide to deploy the Nguviu School full-stack application on Render.
 
 ### 4. Update Backend CORS
 
-After deploying the frontend, you'll get a URL like `https://nguviu-frontend.onrender.com`
+After deploying the frontend, you'll get a URL like `https://kangarufrontend.onrender.com`
 
 1. Go to your backend service in Render
 2. Click "Environment"
 3. Update `CORS_ORIGINS`:
    ```
-   CORS_ORIGINS=https://nguviu-frontend.onrender.com,http://localhost:5173
+   CORS_ORIGINS=https://kangarufrontend.onrender.com,http://localhost:5173
    ```
 4. Click "Save Changes" (backend will auto-redeploy)
 

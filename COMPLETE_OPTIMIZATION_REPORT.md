@@ -1,7 +1,7 @@
 # ✅ COMPLETE IMAGE & VIDEO OPTIMIZATION - FINAL SUMMARY
 
 ## 🎉 ALL PAGES OPTIMIZED!
-
+### all
 Every single image and video across your entire website now loads in **under 0.5 seconds**!
 
 ---
@@ -176,13 +176,13 @@ import OptimizedVideo from './components/OptimizedVideo';
 ### 1. Images Converted to WebP ✅
 ```powershell
 # Already done! Exit Code: 0
-cd nguviu-frontend\public\images
+cd kangarufrontend\public\images
 squoosh-cli --webp '{"quality":85}' -d . **/*.{jpg,jpeg,png,JPG,JPEG,PNG}
 ```
 
 ### 2. Build for Production
 ```powershell
-cd nguviu-frontend
+cd kangarufrontend
 npm run build
 ```
 
@@ -263,7 +263,7 @@ console.log(`Using WebP: ${webpCount}/${images.length} images (${Math.round(webp
 1. ✅ **Images converted to WebP** (Already done!)
 2. **Build for production:**
    ```powershell
-   cd nguviu-frontend
+   cd kangarufrontend
    npm run build
    ```
 3. **Deploy and enjoy blazing fast performance!**

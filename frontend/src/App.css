@@ -1,0 +1,492 @@
+#root {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+
+/* App.css - Full Width Layout */
+body {
+  background-color: #f8fafc;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+/* FULL WIDTH CONTAINER */
+.full-width-container {
+  width: 100%;
+  max-width: 100%;
+  padding: 0 24px;
+  box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  .full-width-container {
+    padding: 0 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .full-width-container {
+    padding: 0 12px;
+  }
+}
+
+/* Full-screen video container */
+.video-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; /* Sends video behind other content */
+}
+
+video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensures video covers entire screen */
+}
+
+.homepage {
+  position: relative;
+  z-index: 1; /* Makes sure the content is above the video */
+}
+
+
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+
+
+.auth-card {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 30px;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}
+.auth-card h2 {
+  margin-bottom: 1rem;
+}
+.auth-card form {
+  display: flex;
+  flex-direction: column;
+}
+.auth-card label {
+  text-align: left;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+.auth-card input {
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+.auth-card button {
+  padding: 0.75rem;
+  background-color: #007bff;
+  color: white; 
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+.auth-card button:hover {
+  background-color: #0056b3;
+} 
+.error-message {
+  color: red;
+  margin-bottom: 1rem;
+}
+.success-message {
+  color: green;
+  margin-bottom: 1rem;
+}
+.loading {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+.section {
+  text-align: left;
+  margin-bottom: 2rem;
+}
+.editable-text {
+  border: 1px dashed #ccc;
+  padding: 0.5rem;
+  border-radius: 4px;
+}
+.editable-text:hover {
+  background-color: #f9f9f9;
+  cursor: pointer;
+}
+.editable-text textarea {
+  width: 100%;
+  height: 100px;
+  font-size: 1rem;
+  padding: 0.5rem;
+}
+.editable-text input {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.editable-text button {
+  margin-top: 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.editable-text button:hover {
+  background-color: #218838;
+}
+.editable-subheading {
+  border: 1px dashed #ccc;
+  padding: 0.5rem;
+  border-radius: 4px;
+}
+.editable-subheading:hover {
+  background-color: #f9f9f9;
+  cursor: pointer;
+}
+.editable-subheading input {
+  width: 100%;
+  font-size: 1.2rem;
+  padding: 0.5rem;
+}
+.editable-subheading button {
+  margin-top: 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.editable-subheading button:hover {
+  background-color: #218838;
+}     
+.editable-heading {
+  border: 1px dashed #ccc;
+  padding: 0.5rem;
+  border-radius: 4px;
+}
+.editable-heading:hover {
+  background-color: #f9f9f9;
+  cursor: pointer;
+}
+.auth-card {
+  background: rgba(255, 255, 255, 0.96);
+  padding: 32px;
+  border-radius: 14px;
+  width: 100%;
+  max-width: 440px;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.35);
+}
+
+.form-input {
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.grid {
+  display: grid;
+  gap: 12px;
+}
+.grid-cols-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+.grid-cols-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+
+
+/* HomePage.css */
+
+/* Video Section */
+.video-section {
+  position: relative;
+  flex: 1;
+  margin: 0;
+  padding: 0;
+}
+
+.video-section video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Image Slider Section */
+.image-slider {
+  position: relative;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+/* Mobile: Stack vertically with reduced height */
+@media (max-width: 768px) {
+  .video-section,
+  .image-slider {
+    height: 250px !important;
+  }
+  
+  .welcome-text {
+    font-size: 1.2rem !important;
+  }
+  
+  .video-text {
+    font-size: 1.3rem !important;
+  }
+  
+  .image-text {
+    font-size: 1.2rem !important;
+  }
+}
+
+/* Student page styling */
+.student-page {
+  padding: 0;
+  margin: 0;
+  text-align: left;
+}
+
+.student-page > h1 {
+  padding: 0 20px;
+  margin: 16px 0;
+}
+
+.student-page > section {
+  padding: 0 20px;
+}
+
+/* Gallery navigation buttons */
+.gallery-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.6);
+  border: none;
+  color: #fff;
+  font-size: 36px;
+  padding: 12px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  z-index: 10;
+  transition: background 0.2s ease;
+}
+
+.gallery-nav:hover {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.gallery-nav-prev {
+  left: -10px;
+}
+
+.gallery-nav-next {
+  right: -10px;
+}
+
+/* Student page hero video mobile optimization */
+@media (max-width: 480px) {
+  .student-page {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  
+  .student-page > section {
+    padding: 0 8px !important;
+  }
+  
+  .student-hero {
+    max-height: 250px !important;
+  }
+  
+  .student-tabs {
+    gap: 6px !important;
+    padding: 0 8px 10px 8px !important;
+  }
+  
+  .student-tabs button {
+    font-size: 0.75rem !important;
+    padding: 6px 8px !important;
+    white-space: nowrap;
+  }
+  
+  .gallery-nav {
+    font-size: 28px !important;
+    padding: 8px 12px !important;
+  }
+  
+  .gallery-nav-prev {
+    left: 0 !important;
+  }
+  
+  .gallery-nav-next {
+    right: 0 !important;
+  }
+}
+
+/* Gallery page styling */
+.gallery-page {
+  padding: 0;
+  margin: 0;
+  text-align: left;
+}
+
+.gallery-page > section {
+  padding: 0 20px;
+}
+
+.gallery-page h2 {
+  padding: 0;
+  margin: 16px 0;
+}
+
+/* Gallery page mobile optimization */
+@media (max-width: 480px) {
+  .gallery-page {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  
+  .gallery-page > section {
+    padding: 0 8px !important;
+  }
+  
+  .gallery-hero {
+    min-height: 250px !important;
+  }
+  
+  .gallery-hero h2 {
+    font-size: 1.5rem !important;
+  }
+  
+  .gallery-hero p {
+    font-size: 0.9rem !important;
+  }
+  
+  .gallery-tabs {
+    gap: 6px !important;
+    padding: 0 8px 10px 8px !important;
+  }
+  
+  .gallery-tabs button {
+    font-size: 0.7rem !important;
+    padding: 6px 10px !important;
+    white-space: nowrap;
+  }
+}
+
+/* Common Styling for Welcome Text */
+.welcome-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2rem;
+  color: rgb(239, 247, 6);
+  font-weight: bold;
+  text-shadow: 3px 3px 6px rgb(239, 5, 5);
+  text-align: center;
+  z-index: 10;
+}
+
+/* Specific styling for video welcome text */
+.video-text {
+  font-size: 3rem;
+}
+
+/* Specific styling for image slider welcome text */
+.image-text {
+  font-size: 2.5rem;
+}
+
+/* Slider Container */
+.slider-container {
+  position: relative;
+  width: 100%;
+  height: 80%;
+}
+
+.slider-image {
+  width: 100%;
+  height: auto;
+  border-radius: 0.5px;
+}
+
+/* Navigation Buttons */
+.prev-slide, .next-slide {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 2rem;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: rgb(224, 8, 8);
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.prev-slide {
+  left: 0;
+}
+
+.next-slide {
+  right: 0;
+}
+
+.prev-slide:hover, .next-slide:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+}

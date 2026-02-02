@@ -1,6 +1,6 @@
 # Railway Deployment Checklist
 
-Use this checklist to ensure your Nguviu School application is correctly configured for Railway deployment.
+Use this checklist to ensure your KANGARU GIRLSSchool application is correctly configured for Railway deployment.
 
 ## Pre-Deployment
 
@@ -14,7 +14,7 @@ Use this checklist to ensure your Nguviu School application is correctly configu
 ## Backend Service Setup
 
 - [ ] Railway project created from GitHub repository
-- [ ] Backend service root directory set to `nguviu-backend`
+- [ ] Backend service root directory set to `kangarubackend`
 - [ ] Environment variables configured:
   - [ ] `MONGO_URI` or `MONGODB_URI` (MongoDB connection string)
   - [ ] `JWT_SECRET` (random secret key)
@@ -28,7 +28,7 @@ Use this checklist to ensure your Nguviu School application is correctly configu
 ## Frontend Service Setup
 
 - [ ] Frontend service created in same Railway project
-- [ ] Frontend service root directory set to `nguviu-frontend`
+- [ ] Frontend service root directory set to `kangarufrontend`
 - [ ] **Vite installed in dependencies** (check package.json)
 - [ ] Environment variables configured:
   - [ ] `VITE_API_URL` (backend Railway URL from previous step)
@@ -53,8 +53,8 @@ Use this checklist to ensure your Nguviu School application is correctly configu
 
 ## Auto-Deploy Configuration
 
-- [ ] Backend watch path: `nguviu-backend/**`
-- [ ] Frontend watch path: `nguviu-frontend/**`
+- [ ] Backend watch path: `kangarubackend/**`
+- [ ] Frontend watch path: `kangarufrontend/**`
 - [ ] Automatic deploys enabled on both services
 - [ ] Test: Push a commit and verify auto-deployment triggers
 
@@ -110,7 +110,7 @@ Use this checklist to ensure your Nguviu School application is correctly configu
 
 ### Backend Required:
 ```
-MONGO_URI=mongodb+srv://user:pass@cluster.mongodb.net/nguviu
+MONGO_URI=mongodb+srv://user:pass@cluster.mongodb.net/kangaru
 JWT_SECRET=your-random-secret-here
 NODE_ENV=production
 CORS_ORIGINS=https://your-frontend.up.railway.app

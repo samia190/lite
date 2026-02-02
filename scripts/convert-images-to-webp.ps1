@@ -2,7 +2,7 @@
 # This will significantly reduce image file sizes (60-80% smaller)
 
 Write-Host "==================================================" -ForegroundColor Cyan
-Write-Host "  Image to WebP Converter for Nguviu Girls School" -ForegroundColor Cyan
+Write-Host "  Image to WebP Converter for KANGARU GIRLS School" -ForegroundColor Cyan
 Write-Host "==================================================" -ForegroundColor Cyan
 Write-Host ""
 
@@ -16,8 +16,8 @@ if (-not $sharpInstalled) {
 
 # Define directories to process
 $imageDirectories = @(
-    "nguviu-frontend\public\images\students",
-    "nguviu-frontend\public\images\gallery"
+    "kangarufrontend\public\images\students",
+    "kangarufrontend\public\images\gallery"
 )
 
 $totalConverted = 0

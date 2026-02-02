@@ -1,12 +1,12 @@
 # Railway Deployment Guide
 
-This guide covers deploying the Nguviu School full-stack application (Node.js/Express backend + Vite/React frontend) to Railway.
+This guide covers deploying the KANGARU GIRLSSchool full-stack application (Node.js/Express backend + Vite/React frontend) to Railway.
 
 ## Overview
 
 Your project structure:
-- `nguviu-backend/` - Node.js/Express API server
-- `nguviu-frontend/` - Vite + React SPA
+- `kangarubackend/` - Node.js/Express API server
+- `kangarufrontend/` - Vite + React SPA
 
 Railway will deploy these as **two separate services** that communicate via HTTP.
 
@@ -36,10 +36,10 @@ Since your backend is in a subdirectory:
 
 1. Go to your backend service **Settings**
 2. Scroll to **"Root Directory"**
-3. Set it to: `nguviu-backend`
+3. Set it to: `kangarubackend`
 4. Click **"Save"**
 
-**Note:** Railway will automatically detect and use the optimized `Dockerfile` in `nguviu-backend/` if present. This provides:
+**Note:** Railway will automatically detect and use the optimized `Dockerfile` in `kangarubackend/` if present. This provides:
 - 77% smaller images (300 MB vs 1.2 GB)
 - Faster cold starts
 - Better performance
@@ -51,7 +51,7 @@ Go to your backend service → **Variables** tab and add:
 
 **Required:**
 ```bash
-MONGO_URI=mongodb+srv://username:password@cluster.mongodb.net/nguviu
+MONGO_URI=mongodb+srv://username:password@cluster.mongodb.net/kangaru
 JWT_SECRET=your-random-secret-key-here
 NODE_ENV=production
 ```
@@ -76,7 +76,7 @@ AWS_SECRET_ACCESS_KEY=your-secret
 
 1. Go to **Settings** → **Networking**
 2. Click **"Generate Domain"**
-3. Copy the generated URL (e.g., `https://nguviu-backend-production.up.railway.app`)
+3. Copy the generated URL (e.g., `https://kangarubackend-production.up.railway.app`)
 
 ---
 
@@ -91,7 +91,7 @@ AWS_SECRET_ACCESS_KEY=your-secret
 ### 2.2 Configure Root Directory & Build
 
 1. Go to frontend service **Settings**
-2. Set **"Root Directory"**: `nguviu-frontend`
+2. Set **"Root Directory"**: `kangarufrontend`
 3. Under **"Build"**, set:
    - **Build Command**: `npm run build`
    - **Start Command**: `npm start`
@@ -111,7 +111,7 @@ NODE_ENV=production
 
 1. Go to **Settings** → **Networking**
 2. Click **"Generate Domain"**
-3. Copy the frontend URL (e.g., `https://nguviu-frontend-production.up.railway.app`)
+3. Copy the frontend URL (e.g., `https://kangarufrontend-production.up.railway.app`)
 
 ### 2.5 Update Backend CORS
 
@@ -134,7 +134,7 @@ Redeploy the backend for the CORS change to take effect.
 3. **Whitelist Railway IPs**:
    - In Atlas: **Network Access** → **Add IP Address** → **Allow Access from Anywhere** (0.0.0.0/0)
    - For better security, add specific Railway IPs from their [documentation](https://docs.railway.app/reference/public-networking#outbound-traffic)
-4. Get your connection string: `mongodb+srv://username:password@cluster.mongodb.net/nguviu`
+4. Get your connection string: `mongodb+srv://username:password@cluster.mongodb.net/kangaru`
 5. Add it to backend **Variables** as `MONGO_URI`
 
 ### Option B: Railway MongoDB Plugin
@@ -153,8 +153,8 @@ Railway automatically sets this up, but verify:
 
 1. Go to **Settings** → **Triggers**
 2. Ensure **"Watch Paths"** includes your service directory:
-   - Backend: `nguviu-backend/**`
-   - Frontend: `nguviu-frontend/**`
+   - Backend: `kangarubackend/**`
+   - Frontend: `kangarufrontend/**`
 3. Check **"Enable automatic deploys"** is ON
 
 Now every push to your main/master branch will trigger automatic deployments! 🚀
@@ -174,7 +174,7 @@ Now every push to your main/master branch will trigger automatic deployments! �
 
 ## Environment Variables Quick Reference
 
-### Backend (`nguviu-backend`)
+### Backend (`kangarubackend`)
 
 | Variable | Required | Description |
 |----------|----------|-------------|
@@ -185,7 +185,7 @@ Now every push to your main/master branch will trigger automatic deployments! �
 | `PUBLIC_ORIGIN` | ⚠️ Recommended | Backend public URL for file URLs |
 | `PORT` | ❌ Auto-set | Railway provides this automatically |
 
-### Frontend (`nguviu-frontend`)
+### Frontend (`kangarufrontend`)
 
 | Variable | Required | Description |
 |----------|----------|-------------|
@@ -228,7 +228,7 @@ Railway will:
 - Check deployment logs for errors
 - Verify `MONGO_URI` is set correctly
 - Ensure `JWT_SECRET` is set
-- Check that root directory is `nguviu-backend`
+- Check that root directory is `kangarubackend`
 
 ### Frontend shows blank page
 - Check browser console for errors

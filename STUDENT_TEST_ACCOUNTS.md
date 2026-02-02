@@ -3,7 +3,7 @@
 ## Login Methods
 
 ### Method 1: Regular Login (Email + Password)
-- Email + Password `Nguviu2025!`
+- Email + Password `kangaru2025!`
 
 ### Method 2: Student Verification (Name + Admission + DOB)
 - Full Name + Admission Number + Date of Birth
@@ -13,8 +13,8 @@
 ## 📋 Student Credentials
 
 ### 1. IBRAHIM S. KOISE
-- **Email:** ibrahim.koise@student.nguviu.ac.ke
-- **Password:** Nguviu2025!
+- **Email:** ibrahim.koise@student.kangaru.ac.ke
+- **Password:** kangaru2025!
 - **Full Name:** IBRAHIM S. KOISE
 - **Admission Number:** 64121
 - **Date of Birth:** 2008-05-15 (May 15, 2008)
@@ -37,8 +37,8 @@
 ---
 
 ### 2. BARIU J. GAKII
-- **Email:** bariu.gakii@student.nguviu.ac.ke
-- **Password:** Nguviu2025!
+- **Email:** bariu.gakii@student.kangaru.ac.ke
+- **Password:** kangaru2025!
 - **Full Name:** BARIU J. GAKII
 - **Admission Number:** 62191
 - **Date of Birth:** 2008-03-22 (March 22, 2008)
@@ -61,8 +61,8 @@
 ---
 
 ### 3. HILDA MUKAMI
-- **Email:** hilda.mukami@student.nguviu.ac.ke
-- **Password:** Nguviu2025!
+- **Email:** hilda.mukami@student.kangaru.ac.ke
+- **Password:** kangaru2025!
 - **Full Name:** HILDA MUKAMI
 - **Admission Number:** 62521
 - **Date of Birth:** 2008-08-10 (August 10, 2008)
@@ -85,8 +85,8 @@
 ---
 
 ### 4. NDUATI P. NYOKABI
-- **Email:** nduati.nyokabi@student.nguviu.ac.ke
-- **Password:** Nguviu2025!
+- **Email:** nduati.nyokabi@student.kangaru.ac.ke
+- **Password:** kangaru2025!
 - **Full Name:** NDUATI P. NYOKABI
 - **Admission Number:** 62711
 - **Date of Birth:** 2008-11-05 (November 5, 2008)
@@ -109,8 +109,8 @@
 ---
 
 ### 5. CHRISTINE N. IRERI
-- **Email:** christine.ireri@student.nguviu.ac.ke
-- **Password:** Nguviu2025!
+- **Email:** christine.ireri@student.kangaru.ac.ke
+- **Password:** kangaru2025!
 - **Full Name:** CHRISTINE N. IRERI
 - **Admission Number:** 62861
 - **Date of Birth:** 2008-01-18 (January 18, 2008)
@@ -136,8 +136,8 @@
 
 ### Method 1: Email Login
 1. Go to login page
-2. Enter email (e.g., `ibrahim.koise@student.nguviu.ac.ke`)
-3. Enter password: `Nguviu2025!`
+2. Enter email (e.g., `ibrahim.koise@student.kangaru.ac.ke`)
+3. Enter password: `kangaru2025!`
 4. Click Login
 5. Navigate to "My Results"
 
@@ -154,7 +154,7 @@
 ## ✅ How to Run the Seed Script
 
 ```bash
-cd nguviu-backend
+cd kangarubackend
 node scripts/seedStudentResults2025.js
 ```
 

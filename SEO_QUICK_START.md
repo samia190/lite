@@ -1,4 +1,4 @@
-# 🚀 SEO Quick Start - NGUVIU GIRLS School
+# 🚀 SEO Quick Start - KANGARU GIRLS School
 
 ## ✅ What's Been Set Up
 
@@ -16,7 +16,7 @@
 .\scripts\update-seo-domain.ps1 -Domain "your-app-name.onrender.com"
 
 # Example:
-.\scripts\update-seo-domain.ps1 -Domain "nguviu-school.onrender.com"
+.\scripts\update-seo-domain.ps1 -Domain "kangaruschool.onrender.com"
 ```
 
 ### Step 2: Verify Files Are Accessible (1 minute)

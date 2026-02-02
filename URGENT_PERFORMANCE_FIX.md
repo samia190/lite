@@ -22,8 +22,8 @@ git push origin main
 ```
 
 ### Step 3: Update Environment Variable
-In Render Dashboard → `nguviu-frontend` → Environment:
-- Add: `VITE_CDN_URL` = `https://nguviu-frontend.onrender.com`
+In Render Dashboard → `kangarufrontend` → Environment:
+- Add: `VITE_CDN_URL` = `https://kangarufrontend.onrender.com`
 
 **RESULT: Images will load 10-20x faster!**
 
@@ -61,21 +61,21 @@ In Render Dashboard → `nguviu-frontend` → Environment:
 1. **Move Images to Frontend CDN**
    ```powershell
    .\scripts\migrate-images-to-frontend.ps1
-   git add nguviu-frontend/public/images
+   git add kangarufrontend/public/images
    git commit -m "Move images to frontend"
    git push
    ```
 
 2. **Verify Deployment**
    - Wait 5 minutes for Render to rebuild
-   - Open: `https://nguviu-frontend.onrender.com/images/students/IMG_0778.JPG`
+   - Open: `https://kangarufrontend.onrender.com/images/students/IMG_0778.JPG`
    - Should load instantly (not 404)
 
 ### Phase 2: Optimize Images (Run Today)
 
 1. **Install Dependencies (if not already)**
    ```powershell
-   cd nguviu-frontend
+   cd kangarufrontend
    npm install sharp --save-dev
    ```
 
@@ -171,7 +171,7 @@ After Phase 1 deployment:
 
 - [ ] Images load from frontend URL
   ```
-  https://nguviu-frontend.onrender.com/images/students/IMG_0778.JPG
+  https://kangarufrontend.onrender.com/images/students/IMG_0778.JPG
   ```
 
 - [ ] Response headers show caching
@@ -197,7 +197,7 @@ After Phase 1 deployment:
 
 1. **Check if migration worked:**
    ```powershell
-   ls nguviu-frontend\public\images\students
+   ls kangarufrontend\public\images\students
    # Should show many JPG files
    ```
 

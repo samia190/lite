@@ -55,7 +55,7 @@ Write-Host "Your images will load much faster even without pre-conversion." -For
 Write-Host ""
 
 Write-Host "To test:" -ForegroundColor Cyan
-Write-Host "  1. cd nguviu-frontend" -ForegroundColor White
+Write-Host "  1. cd kangarufrontend" -ForegroundColor White
 Write-Host "  2. npm run dev" -ForegroundColor White
 Write-Host "  3. Open browser Network tab" -ForegroundColor White
 Write-Host "  4. Watch images load in <0.5s with lazy loading!" -ForegroundColor White

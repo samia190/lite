@@ -50,13 +50,13 @@ npm install -g @squoosh/cli
 
 ### 2. Convert Images to WebP (CRITICAL)
 ```powershell
-cd "c:\Users\User\OneDrive\Desktop\vrs 1.1.1 - Copy\nguviu-frontend\public\images"
+cd "c:\Users\User\OneDrive\Desktop\vrs 1.1.1 - Copy\kangarufrontend\public\images"
 squoosh-cli --webp '{"quality":85}' -d . **/*.{jpg,jpeg,png,JPG,JPEG,PNG}
 ```
 
 ### 3. Build Frontend
 ```powershell
-cd "c:\Users\User\OneDrive\Desktop\vrs 1.1.1 - Copy\nguviu-frontend"
+cd "c:\Users\User\OneDrive\Desktop\vrs 1.1.1 - Copy\kangarufrontend"
 npm run build
 ```
 

@@ -4,7 +4,7 @@
 
 ### 1. File Upload Route ✅
 - **Endpoint**: `POST /api/files/upload`
-- **Location**: `nguviu-backend/routes/files.js`
+- **Location**: `kangarubackend/routes/files.js`
 - **Status**: ✅ Created and configured
 - **Features**:
   - Single file upload support
@@ -15,7 +15,7 @@
 
 ### 2. Magazine Management Route ✅
 - **Endpoint**: `POST /api/school-magazine`
-- **Location**: `nguviu-backend/routes/schoolMagazine.js`
+- **Location**: `kangarubackend/routes/schoolMagazine.js`
 - **Status**: ✅ Configured
 - **Operations**:
   - GET `/api/school-magazine` - Get latest magazine
@@ -24,12 +24,12 @@
   - DELETE `/api/school-magazine/:id` - Delete magazine
 
 ### 3. Route Registration ✅
-**File**: `nguviu-backend/index.js`
+**File**: `kangarubackend/index.js`
 - ✅ Line 140: `app.use("/api/files", filesRoutes);`
 - ✅ Line 154: `app.use("/api/school-magazine", schoolMagazineRoutes);`
 
 ### 4. Backend Configuration ✅
-**File**: `nguviu-backend/index.js`
+**File**: `kangarubackend/index.js`
 - ✅ Body parser with 50MB limit
 - ✅ CORS configured for Render domain
 - ✅ Compression middleware enabled
@@ -39,7 +39,7 @@
 ## Frontend Components Verification
 
 ### 1. Magazine Management Component ✅
-**File**: `nguviu-frontend/src/components/MagazineManagement.jsx`
+**File**: `kangarufrontend/src/components/MagazineManagement.jsx`
 - ✅ Direct file upload from computer/phone
 - ✅ PDF file validation (max 50MB)
 - ✅ Image file validation (max 5MB)
@@ -49,7 +49,7 @@
 - ✅ Console logging for debugging
 
 ### 2. Magazine Viewer Component ✅
-**File**: `nguviu-frontend/src/components/SchoolMagazineViewer.jsx`
+**File**: `kangarufrontend/src/components/SchoolMagazineViewer.jsx`
 - ✅ PDF inline viewing
 - ✅ Download functionality
 - ✅ Open in new tab option
@@ -79,14 +79,14 @@
 
 ### Backend (.env)
 ```env
-MONGO_URI=mongodb+srv://nguviu-girls:nguviu95@nguviugirlsseniourschoo.kba6ls1.mongodb.net/
-CLIENT_ORIGIN=https://st-angela-nguviu-girls-senior-school.onrender.com
-CORS_ORIGINS=https://st-angela-nguviu-girls-senior-school.onrender.com,http://localhost:5173
+MONGO_URI=mongodb+srv://kangarugirls:kangaru95@kangarugirlsseniourschoo.kba6ls1.mongodb.net/
+CLIENT_ORIGIN=https://kangaru-girls-senior-school.onrender.com
+CORS_ORIGINS=https://kangaru-girls-senior-school.onrender.com,http://localhost:5173
 ```
 
 ### Frontend (.env.production)
 ```env
-VITE_API_URL=https://nguviu-school.onrender.com
+VITE_API_URL=https://kangaruschool.onrender.com
 ```
 
 ## Debugging Tools
@@ -100,7 +100,7 @@ VITE_API_URL=https://nguviu-school.onrender.com
 
 ### Check Browser Console For:
 1. "Uploading pdf: [filename] Size: [size]MB"
-2. "Upload URL: https://nguviu-school.onrender.com/api/files/upload"
+2. "Upload URL: https://kangaruschool.onrender.com/api/files/upload"
 3. "Upload response status: 200"
 4. "Upload success: {url: '...', ...}"
 5. "Magazine saved successfully: {_id: '...', ...}"
@@ -137,12 +137,12 @@ VITE_API_URL=https://nguviu-school.onrender.com
 ## Testing Checklist
 
 ### Local Testing:
-- [ ] Start backend: `cd nguviu-backend && npm start`
-- [ ] Start frontend: `cd nguviu-frontend && npm run dev`
+- [ ] Start backend: `cd kangarubackend && npm start`
+- [ ] Start frontend: `cd kangarufrontend && npm run dev`
 - [ ] Navigate to Admin Dashboard → School Magazine
 - [ ] Select small PDF (< 5MB) for initial test
 - [ ] Check browser console for upload logs
-- [ ] Verify file appears in `nguviu-backend/public/uploads/`
+- [ ] Verify file appears in `kangarubackend/public/uploads/`
 - [ ] Verify magazine appears in list
 
 ### Production Testing (Render):

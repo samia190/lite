@@ -49,7 +49,7 @@
 ### Option 1: Standard Deploy
 ```powershell
 # Build frontend
-cd nguviu-frontend
+cd kangarufrontend
 npm run build
 
 # Deploy to Render (your existing process)
@@ -61,11 +61,11 @@ git push
 ### Option 2: Test Locally First
 ```powershell
 # Terminal 1 - Backend
-cd nguviu-backend
+cd kangarubackend
 npm start
 
 # Terminal 2 - Frontend preview
-cd nguviu-frontend
+cd kangarufrontend
 npm run build
 npx vite preview
 ```

@@ -15,8 +15,8 @@ Your images folder on the backend is **EMPTY** - this is why loading is extremel
 ### 1. Added Persistent Disk Storage (render.yaml)
 ```yaml
 disk:
-  name: nguviu-data
-  mountPath: /opt/render/project/src/nguviu-backend/public
+  name: kangarudata
+  mountPath: /opt/render/project/src/kangarubackend/public
   sizeGB: 1
 ```
 **This ensures images persist across deployments!**
@@ -38,12 +38,12 @@ Since your backend images are missing, you need to upload them:
 
 **Option A: Using Render Shell (Recommended)**
 ```bash
-# 1. Go to Render Dashboard → nguviu-backend → Shell
+# 1. Go to Render Dashboard → kangarubackend → Shell
 # 2. Create directories
-mkdir -p /opt/render/project/src/nguviu-backend/public/images/students
-mkdir -p /opt/render/project/src/nguviu-backend/public/images/gallery
-mkdir -p /opt/render/project/src/nguviu-backend/public/images/staff
-mkdir -p /opt/render/project/src/nguviu-backend/public/images/events
+mkdir -p /opt/render/project/src/kangarubackend/public/images/students
+mkdir -p /opt/render/project/src/kangarubackend/public/images/gallery
+mkdir -p /opt/render/project/src/kangarubackend/public/images/staff
+mkdir -p /opt/render/project/src/kangarubackend/public/images/events
 
 # 3. Upload images via SFTP or create an upload endpoint
 ```
@@ -53,7 +53,7 @@ Create an admin endpoint to bulk upload images from your local machine.
 
 **Option C: Move Images to Frontend (BEST FOR FREE TIER)**
 Since Render free tier backend storage is limited:
-1. Move ALL images to `nguviu-frontend/public/images/`
+1. Move ALL images to `kangarufrontend/public/images/`
 2. Update API URLs to serve from frontend CDN
 3. This gives you free CDN + faster loading
 
@@ -64,7 +64,7 @@ Since Render free tier backend storage is limited:
 1. **Copy images to frontend:**
 ```powershell
 # Run from project root
-Copy-Item -Recurse "nguviu-backend\public\images\*" "nguviu-frontend\public\images\"
+Copy-Item -Recurse "kangarubackend\public\images\*" "kangarufrontend\public\images\"
 ```
 
 2. **Update image URLs in components** - Replace:
@@ -78,14 +78,14 @@ src={`${import.meta.env.VITE_CDN_URL || ''}/images/students/IMG_0778.JPG`}
 
 3. **Add CDN URL env variable:**
 ```env
-VITE_CDN_URL=https://nguviu-frontend.onrender.com
+VITE_CDN_URL=https://kangarufrontend.onrender.com
 ```
 
 ### Step 3: Optimize Images Before Upload
 
 **Run image optimization script:**
 ```powershell
-cd nguviu-frontend
+cd kangarufrontend
 npm run optimize:images
 ```
 
@@ -121,12 +121,12 @@ After deployment:
 1. **Check Image URLs:**
 ```bash
 # Should return 200 OK
-curl -I https://nguviu-backend.onrender.com/images/students/IMG_0778.JPG
+curl -I https://kangarubackend.onrender.com/images/students/IMG_0778.JPG
 ```
 
 2. **Check Cache Headers:**
 ```bash
-curl -I https://nguviu-frontend.onrender.com/assets/index-abc123.js
+curl -I https://kangarufrontend.onrender.com/assets/index-abc123.js
 # Should show: Cache-Control: public, max-age=31536000, immutable
 ```
 
@@ -177,14 +177,14 @@ curl -I https://nguviu-frontend.onrender.com/assets/index-abc123.js
 2. **Verify Disk Mount:**
 ```bash
 # In Render Shell
-ls -la /opt/render/project/src/nguviu-backend/public/images/
+ls -la /opt/render/project/src/kangarubackend/public/images/
 # Should show your image files
 ```
 
 3. **Check CORS:**
 ```javascript
 // Backend should allow your frontend domain
-CORS_ORIGINS=https://nguviu-frontend.onrender.com
+CORS_ORIGINS=https://kangarufrontend.onrender.com
 ```
 
 ### Still Slow After All Fixes?

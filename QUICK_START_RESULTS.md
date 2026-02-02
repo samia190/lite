@@ -76,7 +76,7 @@ The system is already installed and ready! But for reference:
 
 ```bash
 # Backend dependency already installed
-cd nguviu-backend
+cd kangarubackend
 npm install multer
 
 # Directory created
@@ -90,7 +90,7 @@ mkdir public/results
 ## Testing the System
 
 ### Test Scenario 1: PDF Upload
-1. Login as admin: `admin@nguviu.ac.ke`
+1. Login as admin: `admin@kangaru.ac.ke`
 2. Go to Results Management
 3. Click "Upload PDF Result"
 4. Select a student (e.g., ADM2024001)

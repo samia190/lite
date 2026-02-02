@@ -184,13 +184,13 @@ project/
 │   └── workflows/
 │       └── docker-test.yml         # ✅ NEW: CI testing
 │
-├── nguviu-backend/
+├── kangarubackend/
 │   ├── Dockerfile                   # ✅ NEW: Alpine-based
 │   ├── .dockerignore               # ✅ NEW: Backend excludes
 │   ├── .env.example                # ✅ Updated
 │   └── package.json                # ✅ Updated: engines added
 │
-└── nguviu-frontend/
+└── kangarufrontend/
     ├── Dockerfile                   # ✅ NEW: Multi-stage Alpine
     ├── .dockerignore               # ✅ NEW: Frontend excludes
     ├── .env.example                # ✅ Updated
@@ -245,11 +245,11 @@ After building, verify optimizations worked:
 docker-compose build
 
 # 2. Check sizes
-docker images | grep nguviu
+docker images | grep kangaru
 
 # Expected output:
-# nguviu-backend   latest   abc123   300MB
-# nguviu-frontend  latest   xyz789   200MB
+# kangarubackend   latest   abc123   300MB
+# kangarufrontend  latest   xyz789   200MB
 
 # 3. Verify total under 600 MB
 # ✅ PASS if both under 400 MB each

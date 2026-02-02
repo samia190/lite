@@ -2,7 +2,7 @@
 # Checks if all SEO files are properly configured before deployment
 
 Write-Host ""
-Write-Host "🔍 NGUVIU GIRLS - SEO Setup Validation" -ForegroundColor Cyan
+Write-Host "🔍 KANGARU GIRLS - SEO Setup Validation" -ForegroundColor Cyan
 Write-Host "=====================================" -ForegroundColor Cyan
 Write-Host ""
 
@@ -12,13 +12,13 @@ $projectRoot = Split-Path -Parent $PSScriptRoot
 
 # Check if sitemap.xml exists
 Write-Host "📄 Checking sitemap.xml..." -ForegroundColor Yellow
-$sitemapPath = Join-Path $projectRoot "nguviu-frontend\public\sitemap.xml"
+$sitemapPath = Join-Path $projectRoot "kangarufrontend\public\sitemap.xml"
 if (Test-Path $sitemapPath) {
     Write-Host "   ✅ File exists" -ForegroundColor Green
     
     # Check if domain is updated
     $content = Get-Content $sitemapPath -Raw
-    if ($content -match 'https://your-domain\.com') {
+    if ($content -match 'https://kangarugirlseniorschool.co.ke') {
         Write-Host "   ⚠️  WARNING: Domain not updated (still using placeholder)" -ForegroundColor Yellow
         $warnings++
     } else {
@@ -44,14 +44,14 @@ Write-Host ""
 
 # Check if robots.txt exists
 Write-Host "📄 Checking robots.txt..." -ForegroundColor Yellow
-$robotsPath = Join-Path $projectRoot "nguviu-frontend\public\robots.txt"
+$robotsPath = Join-Path $projectRoot "kangarufrontend\public\robots.txt"
 if (Test-Path $robotsPath) {
     Write-Host "   ✅ File exists" -ForegroundColor Green
     
     $content = Get-Content $robotsPath -Raw
     
     # Check if domain is updated
-    if ($content -match 'https://your-domain\.com') {
+    if ($content -match 'https://kangarugirlseniorschool.co.ke') {
         Write-Host "   ⚠️  WARNING: Domain not updated (still using placeholder)" -ForegroundColor Yellow
         $warnings++
     } else {
@@ -82,7 +82,7 @@ Write-Host ""
 
 # Check index.html for meta tags
 Write-Host "📄 Checking index.html..." -ForegroundColor Yellow
-$indexPath = Join-Path $projectRoot "nguviu-frontend\index.html"
+$indexPath = Join-Path $projectRoot "kangarufrontend\index.html"
 if (Test-Path $indexPath) {
     Write-Host "   ✅ File exists" -ForegroundColor Green
     
@@ -109,7 +109,7 @@ if (Test-Path $indexPath) {
     }
     
     # Check if domain is updated
-    if ($content -match 'https://your-domain\.com') {
+    if ($content -match 'https://kangarugirlseniorschool.co.ke') {
         Write-Host "   ⚠️  WARNING: Domain not updated in meta tags" -ForegroundColor Yellow
         $warnings++
     } else {
@@ -124,7 +124,7 @@ Write-Host ""
 
 # Check schema.json
 Write-Host "📄 Checking schema.json..." -ForegroundColor Yellow
-$schemaPath = Join-Path $projectRoot "nguviu-frontend\public\schema.json"
+$schemaPath = Join-Path $projectRoot "kangarufrontend\public\schema.json"
 if (Test-Path $schemaPath) {
     Write-Host "   ✅ File exists" -ForegroundColor Green
     

@@ -1,5 +1,5 @@
 [build]
-  base = "nguviu-frontend"
+  base = "kangarufrontend"
   publish = "dist"
   command = "npm run build:netlify"
 

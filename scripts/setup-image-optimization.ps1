@@ -9,7 +9,7 @@ Write-Host "IMAGE OPTIMIZATION SETUP" -ForegroundColor Cyan
 Write-Host "========================================" -ForegroundColor Cyan
 Write-Host ""
 
-$frontendPath = Join-Path $PSScriptRoot "..\nguviu-frontend"
+$frontendPath = Join-Path $PSScriptRoot "..\kangarufrontend"
 
 # Step 1: Install required packages
 Write-Host "Step 1: Installing optimization packages..." -ForegroundColor Yellow

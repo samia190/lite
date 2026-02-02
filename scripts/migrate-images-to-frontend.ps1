@@ -5,8 +5,8 @@ Write-Host "========================================" -ForegroundColor Cyan
 Write-Host "  Image Migration Script - Backend to Frontend" -ForegroundColor Cyan
 Write-Host "========================================`n" -ForegroundColor Cyan
 
-$backendImages = "nguviu-backend\public\images"
-$frontendImages = "nguviu-frontend\public\images"
+$backendImages = "kangarubackend\public\images"
+$frontendImages = "kangarufrontend\public\images"
 
 # Check if source exists
 if (-Not (Test-Path $backendImages)) {
@@ -53,7 +53,7 @@ Write-Host "✓ Total image size: $sizeInMB MB" -ForegroundColor Green
 if ($sizeInMB -gt 50) {
     Write-Host "`nWARNING: Image folder is quite large ($sizeInMB MB)" -ForegroundColor Yellow
     Write-Host "Consider running the image optimization script to reduce size:" -ForegroundColor Yellow
-    Write-Host "  cd nguviu-frontend" -ForegroundColor Cyan
+    Write-Host "  cd kangarufrontend" -ForegroundColor Cyan
     Write-Host "  npm run optimize:images" -ForegroundColor Cyan
 }
 
@@ -62,12 +62,12 @@ Write-Host "  Migration Complete!" -ForegroundColor Green
 Write-Host "========================================" -ForegroundColor Cyan
 Write-Host "`nNext Steps:" -ForegroundColor Yellow
 Write-Host "1. Commit the changes:" -ForegroundColor White
-Write-Host "   git add nguviu-frontend/public/images/" -ForegroundColor Cyan
+Write-Host "   git add kangarufrontend/public/images/" -ForegroundColor Cyan
 Write-Host "   git commit -m 'Move images to frontend for CDN delivery'" -ForegroundColor Cyan
 Write-Host "`n2. Deploy to Render:" -ForegroundColor White
 Write-Host "   git push origin main" -ForegroundColor Cyan
 Write-Host "`n3. Images will now be served from the frontend CDN" -ForegroundColor White
 Write-Host "   (Much faster than backend serving!)" -ForegroundColor Green
 Write-Host "`n4. Optional - Optimize images for faster loading:" -ForegroundColor White
-Write-Host "   cd nguviu-frontend && npm run optimize:images" -ForegroundColor Cyan
+Write-Host "   cd kangarufrontend && npm run optimize:images" -ForegroundColor Cyan
 Write-Host ""

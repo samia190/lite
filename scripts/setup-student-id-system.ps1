@@ -6,10 +6,10 @@ Write-Host "========================================`n" -ForegroundColor Cyan
 
 # Check if qrcode is installed
 Write-Host "Checking frontend dependencies..." -ForegroundColor Yellow
-$packageJson = Get-Content "nguviu-frontend\package.json" | ConvertFrom-Json
+$packageJson = Get-Content "kangarufrontend\package.json" | ConvertFrom-Json
 if (-not $packageJson.dependencies.qrcode) {
     Write-Host "Installing qrcode package..." -ForegroundColor Yellow
-    cd nguviu-frontend
+    cd kangarufrontend
     npm install qrcode
     cd ..
     Write-Host "✓ QR code package installed" -ForegroundColor Green
@@ -19,7 +19,7 @@ if (-not $packageJson.dependencies.qrcode) {
 
 # Check if .env has ID_CARD_SECRET
 Write-Host "`nChecking backend environment..." -ForegroundColor Yellow
-$envPath = "nguviu-backend\.env"
+$envPath = "kangarubackend\.env"
 if (Test-Path $envPath) {
     $envContent = Get-Content $envPath -Raw
     if ($envContent -match "ID_CARD_SECRET=") {
@@ -53,10 +53,10 @@ Write-Host "========================================" -ForegroundColor Cyan
 
 Write-Host "`nNext Steps:" -ForegroundColor Yellow
 Write-Host "1. Start the backend server:" -ForegroundColor White
-Write-Host "   cd nguviu-backend && npm start" -ForegroundColor Cyan
+Write-Host "   cd kangarubackend && npm start" -ForegroundColor Cyan
 
 Write-Host "`n2. Start the frontend server:" -ForegroundColor White
-Write-Host "   cd nguviu-frontend && npm run dev" -ForegroundColor Cyan
+Write-Host "   cd kangarufrontend && npm run dev" -ForegroundColor Cyan
 
 Write-Host "`n3. Login as admin and navigate to:" -ForegroundColor White
 Write-Host "   http://localhost:5173/#/student-id-management" -ForegroundColor Cyan

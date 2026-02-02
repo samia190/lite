@@ -37,9 +37,9 @@ Use this checklist when deploying to ensure your site is properly optimized for 
   ```
   
 - [ ] Or manually update these files with your Render URL:
-  - [ ] nguviu-frontend/public/sitemap.xml
-  - [ ] nguviu-frontend/public/robots.txt
-  - [ ] nguviu-frontend/index.html
+  - [ ] kangarufrontend/public/sitemap.xml
+  - [ ] kangarufrontend/public/robots.txt
+  - [ ] kangarufrontend/index.html
 
 - [ ] Commit and push changes if updated manually
 - [ ] Redeploy to Render (if needed)

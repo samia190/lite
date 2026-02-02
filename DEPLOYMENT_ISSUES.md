@@ -5,14 +5,14 @@
 ### ✅ CRITICAL FIXES
 
 #### 1. **CommonJS vs ESM Mismatch** ⚠️
-**File**: `nguviu-backend/utils/email.js`
+**File**: `kangarubackend/utils/email.js`
 **Problem**: Used `require()` and `module.exports` instead of ES modules
 **Impact**: Would cause deployment failure since `package.json` has `"type": "module"`
 **Fixed**: ✅ Converted to `import`/`export` syntax
 
 #### 2. **Hardcoded Backend URL** ⚠️
-**File**: `nguviu-frontend/src/utils/api.js`
-**Problem**: Had hardcoded Render URL `https://nguviu-school.onrender.com`
+**File**: `kangarufrontend/src/utils/api.js`
+**Problem**: Had hardcoded Render URL `https://kangaruschool.onrender.com`
 **Impact**: Would only work with that specific URL, not flexible for different deployments
 **Fixed**: ✅ Changed to use environment variable `VITE_API_URL` or empty string for relative URLs
 
@@ -27,9 +27,9 @@
 
 #### 4. **Updated Environment Examples**
 **Files**: 
-- `nguviu-backend/.env.example`
-- `nguviu-frontend/.env.example`
-- `nguviu-frontend/.env.production.example` (NEW)
+- `kangarubackend/.env.example`
+- `kangarufrontend/.env.example`
+- `kangarufrontend/.env.production.example` (NEW)
 
 **Added**: Render-specific notes and all required environment variables
 
@@ -44,7 +44,7 @@
 ### Issues That Will Occur on Free Tier
 
 #### 1. **File Upload Persistence** 🔴
-**Location**: `nguviu-backend/public/uploads/`
+**Location**: `kangarubackend/public/uploads/`
 **Problem**: Render's free tier uses ephemeral storage
 **Impact**: All uploaded files (gallery images, submissions, etc.) will be deleted when service restarts (every ~15 mins of inactivity)
 **Solutions**:
@@ -74,20 +74,20 @@ npm install @aws-sdk/client-s3
 - Upgrade to paid tier
 
 #### 3. **Data Files in Git** ⚠️
-**Location**: `nguviu-backend/data/*.json`
+**Location**: `kangarubackend/data/*.json`
 **Current Status**: These files are tracked in git
 **Problem**: `.gitignore` excludes them but they're already committed
 **Impact**: Real user data might be committed to git
 **Recommended Action**:
 ```bash
 # Remove from git but keep locally:
-git rm --cached nguviu-backend/data/contacts.json
-git rm --cached nguviu-backend/data/content.json
-git rm --cached nguviu-backend/data/students.json
-git rm --cached nguviu-backend/data/users.json
+git rm --cached kangarubackend/data/contacts.json
+git rm --cached kangarubackend/data/content.json
+git rm --cached kangarubackend/data/students.json
+git rm --cached kangarubackend/data/users.json
 
 # Update .gitignore (already done):
-# data/*.json is already in nguviu-backend/.gitignore
+# data/*.json is already in kangarubackend/.gitignore
 ```
 
 ---
@@ -108,7 +108,7 @@ git rm --cached nguviu-backend/data/users.json
 
 ## 📋 ENVIRONMENT VARIABLES REQUIRED
 
-### Backend (nguviu-backend)
+### Backend (kangarubackend)
 ```env
 # CRITICAL - MUST SET
 MONGO_URI=mongodb+srv://...
@@ -132,7 +132,7 @@ RATE_LIMIT_WINDOW_MS=900000
 RATE_LIMIT_MAX=5
 ```
 
-### Frontend (nguviu-frontend)
+### Frontend (kangarufrontend)
 ```env
 # CRITICAL - MUST SET
 VITE_API_URL=https://your-backend.onrender.com
@@ -146,25 +146,25 @@ Run these tests before deploying:
 
 ```bash
 # 1. Test backend builds
-cd nguviu-backend
+cd kangarubackend
 npm install
 npm start
 # Should start without errors
 
 # 2. Test frontend builds
-cd ../nguviu-frontend
+cd ../kangarufrontend
 npm install
 npm run build
 # Should complete without errors
 
 # 3. Check for hardcoded URLs
-grep -r "localhost:4000" nguviu-frontend/src/
-grep -r "localhost:5173" nguviu-backend/
+grep -r "localhost:4000" kangarufrontend/src/
+grep -r "localhost:5173" kangarubackend/
 # Should only find in comments or fallbacks
 
 # 4. Verify environment variable usage
-grep -r "process.env" nguviu-backend/ | grep -v node_modules
-grep -r "import.meta.env" nguviu-frontend/src/
+grep -r "process.env" kangarubackend/ | grep -v node_modules
+grep -r "import.meta.env" kangarufrontend/src/
 ```
 
 ---

@@ -8,8 +8,8 @@ $allPassed = $true
 
 # Check 1: node_modules not in Git
 Write-Host "✓ Checking .gitignore..." -NoNewline
-$frontendGitignore = Get-Content "nguviu-frontend\.gitignore" -ErrorAction SilentlyContinue
-$backendGitignore = Get-Content "nguviu-backend\.gitignore" -ErrorAction SilentlyContinue
+$frontendGitignore = Get-Content "kangarufrontend\.gitignore" -ErrorAction SilentlyContinue
+$backendGitignore = Get-Content "kangarubackend\.gitignore" -ErrorAction SilentlyContinue
 
 if ($frontendGitignore -match "node_modules" -and $backendGitignore -match "node_modules") {
     Write-Host " ✅ PASS" -ForegroundColor Green
@@ -20,7 +20,7 @@ if ($frontendGitignore -match "node_modules" -and $backendGitignore -match "node
 
 # Check 2: Vite in dependencies (not devDependencies)
 Write-Host "✓ Checking Vite location..." -NoNewline
-$packageJson = Get-Content "nguviu-frontend\package.json" | ConvertFrom-Json
+$packageJson = Get-Content "kangarufrontend\package.json" | ConvertFrom-Json
 if ($packageJson.dependencies.vite) {
     Write-Host " ✅ PASS (in dependencies)" -ForegroundColor Green
 } else {
@@ -64,7 +64,7 @@ if ($packageJson.engines.node) {
 
 # Check 7: Backend package.json
 Write-Host "✓ Checking backend..." -NoNewline
-$backendPackageJson = Get-Content "nguviu-backend\package.json" | ConvertFrom-Json
+$backendPackageJson = Get-Content "kangarubackend\package.json" | ConvertFrom-Json
 if ($backendPackageJson.scripts.start) {
     Write-Host " ✅ PASS" -ForegroundColor Green
 } else {
@@ -74,7 +74,7 @@ if ($backendPackageJson.scripts.start) {
 
 # Check 8: Railway config files exist
 Write-Host "✓ Checking Railway config..." -NoNewline
-if ((Test-Path "nguviu-frontend\railway.toml") -and (Test-Path "nguviu-backend\railway.toml")) {
+if ((Test-Path "kangarufrontend\railway.toml") -and (Test-Path "kangarubackend\railway.toml")) {
     Write-Host " ✅ PASS" -ForegroundColor Green
 } else {
     Write-Host " ⚠️  WARNING - Railway config files missing (optional)" -ForegroundColor Yellow
@@ -82,7 +82,7 @@ if ((Test-Path "nguviu-frontend\railway.toml") -and (Test-Path "nguviu-backend\r
 
 # Check 9: Environment example files
 Write-Host "✓ Checking .env.example files..." -NoNewline
-if ((Test-Path "nguviu-frontend\.env.example") -and (Test-Path "nguviu-backend\.env.example")) {
+if ((Test-Path "kangarufrontend\.env.example") -and (Test-Path "kangarubackend\.env.example")) {
     Write-Host " ✅ PASS" -ForegroundColor Green
 } else {
     Write-Host " ⚠️  INFO - .env.example files recommended" -ForegroundColor Yellow
@@ -108,7 +108,7 @@ $response = Read-Host
 
 if ($response -eq 'y' -or $response -eq 'Y') {
     Write-Host "`nTesting frontend production build..." -ForegroundColor Cyan
-    Push-Location nguviu-frontend
+    Push-Location kangarufrontend
     
     Write-Host "Running: npm ci --only=production" -ForegroundColor Gray
     npm ci --only=production

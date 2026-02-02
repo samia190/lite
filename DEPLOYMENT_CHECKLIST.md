@@ -25,7 +25,7 @@
   - [ ] Images fade in smoothly
 
 ### Step 2: Build & Deploy
-- [ ] Run `npm run build` in nguviu-frontend folder ✅ (Already done!)
+- [ ] Run `npm run build` in kangarufrontend folder ✅ (Already done!)
 - [ ] Commit changes to git
 - [ ] Push to your repository
 - [ ] Deploy to Render (automatic or manual)
@@ -155,18 +155,18 @@
 ## Files You Can Safely Deploy
 
 ### Modified Files (Safe ✅)
-1. `nguviu-frontend/src/components/LazyImage.jsx`
-2. `nguviu-frontend/src/components/Gallery.jsx`
-3. `nguviu-frontend/src/components/Student.jsx`
-4. `nguviu-frontend/src/responsive.css`
-5. `nguviu-frontend/src/index.css`
+1. `kangarufrontend/src/components/LazyImage.jsx`
+2. `kangarufrontend/src/components/Gallery.jsx`
+3. `kangarufrontend/src/components/Student.jsx`
+4. `kangarufrontend/src/responsive.css`
+5. `kangarufrontend/src/index.css`
 
 ### New Files (Documentation Only)
 6. `IMAGE_OPTIMIZATION_GUIDE.md`
 7. `MOBILE_OPTIMIZATION_SUMMARY.md`
 8. `DEPLOY_QUICK_GUIDE.md`
 9. `scripts/convert-images-to-webp.ps1`
-10. `nguviu-frontend/src/utils/imageOptimization.js`
+10. `kangarufrontend/src/utils/imageOptimization.js`
 
 **Backend:** No changes needed ✅
 
@@ -182,11 +182,11 @@ git revert HEAD
 git push
 
 # Option 2: Restore specific files
-git checkout HEAD~1 -- nguviu-frontend/src/components/LazyImage.jsx
-git checkout HEAD~1 -- nguviu-frontend/src/components/Gallery.jsx
-git checkout HEAD~1 -- nguviu-frontend/src/components/Student.jsx
-git checkout HEAD~1 -- nguviu-frontend/src/responsive.css
-git checkout HEAD~1 -- nguviu-frontend/src/index.css
+git checkout HEAD~1 -- kangarufrontend/src/components/LazyImage.jsx
+git checkout HEAD~1 -- kangarufrontend/src/components/Gallery.jsx
+git checkout HEAD~1 -- kangarufrontend/src/components/Student.jsx
+git checkout HEAD~1 -- kangarufrontend/src/responsive.css
+git checkout HEAD~1 -- kangarufrontend/src/index.css
 git commit -m "Rollback mobile optimizations"
 git push
 ```

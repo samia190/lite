@@ -139,18 +139,18 @@ initPerformanceMonitoring();
 
 ```bash
 # Frontend
-cd nguviu-frontend
+cd kangarufrontend
 npm install
 
 # Backend
-cd ../nguviu-backend
+cd ../kangarubackend
 npm install
 ```
 
 ### Step 2: Convert Images to WebP
 
 ```bash
-cd nguviu-frontend
+cd kangarufrontend
 npm run convert:webp
 ```
 
@@ -173,14 +173,14 @@ npm run build:render
 
 The backend is already optimized. Just deploy with:
 ```bash
-cd nguviu-backend
+cd kangarubackend
 npm start
 ```
 
 Make sure these environment variables are set on Render:
 ```
 NODE_ENV=production
-CORS_ORIGINS=https://st-angela-nguviu-girls-senior-school.onrender.com
+CORS_ORIGINS=https://kangaru-girls-senior-school.onrender.com
 ```
 
 ### Step 5: Deploy Frontend
@@ -192,7 +192,7 @@ npm run build:render
 
 Set environment variable:
 ```
-VITE_API_URL=https://nguviu-school.onrender.com
+VITE_API_URL=https://kangaruschool.onrender.com
 ```
 
 ---

@@ -8,7 +8,7 @@
 ## ✅ Solutions Implemented
 
 ### 1. Enhanced LazyImage Component
-**File:** `nguviu-frontend/src/components/LazyImage.jsx`
+**File:** `kangarufrontend/src/components/LazyImage.jsx`
 
 **Improvements:**
 - ✅ Increased viewport preload margin: 200px → 300px
@@ -24,7 +24,7 @@
 ---
 
 ### 2. Gallery Page Optimization
-**File:** `nguviu-frontend/src/components/Gallery.jsx`
+**File:** `kangarufrontend/src/components/Gallery.jsx`
 
 **Changes:**
 - ✅ Replaced `<img>` tags with `LazyImage` component
@@ -42,7 +42,7 @@
 ---
 
 ### 3. Student Page Optimization
-**File:** `nguviu-frontend/src/components/Student.jsx`
+**File:** `kangarufrontend/src/components/Student.jsx`
 
 **Changes:**
 - ✅ Updated Academic Life gallery grid
@@ -60,8 +60,8 @@
 
 ### 4. Responsive CSS Enhancements
 **Files:** 
-- `nguviu-frontend/src/responsive.css`
-- `nguviu-frontend/src/index.css`
+- `kangarufrontend/src/responsive.css`
+- `kangarufrontend/src/index.css`
 
 **New Styles:**
 ```css
@@ -95,7 +95,7 @@
 ---
 
 ### 5. Backend Already Optimized ✅
-**File:** `nguviu-backend/index.js`
+**File:** `kangarubackend/index.js`
 
 **Existing Optimizations:**
 - ✅ Compression middleware (gzip/brotli) - Level 6
@@ -163,7 +163,7 @@ cd scripts
 ---
 
 ### 2. Image Optimization Utils
-**File:** `nguviu-frontend/src/utils/imageOptimization.js`
+**File:** `kangarufrontend/src/utils/imageOptimization.js`
 
 **Functions:**
 - `getOptimizedImagePath()` - Auto WebP selection
@@ -199,18 +199,18 @@ Contains:
 
 ### Step 1: Build Frontend
 ```powershell
-cd nguviu-frontend
+cd kangarufrontend
 npm run build
 ```
 
 ### Step 2: Test Locally
 ```powershell
 # Start backend
-cd nguviu-backend
+cd kangarubackend
 npm start
 
 # In another terminal, preview frontend build
-cd nguviu-frontend
+cd kangarufrontend
 npx vite preview
 ```
 

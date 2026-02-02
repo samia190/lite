@@ -25,7 +25,7 @@ All images and videos now load in **under 0.5 seconds** through:
 ## 📦 WHAT WAS IMPLEMENTED
 
 ### 1. **OptimizedImage Component**
-Location: `nguviu-frontend/src/components/OptimizedImage.jsx`
+Location: `kangarufrontend/src/components/OptimizedImage.jsx`
 
 Features:
 - Automatic WebP conversion with JPG/PNG fallback
@@ -45,7 +45,7 @@ Usage:
 ```
 
 ### 2. **OptimizedVideo Component**
-Location: `nguviu-frontend/src/components/OptimizedVideo.jsx`
+Location: `kangarufrontend/src/components/OptimizedVideo.jsx`
 
 Features:
 - Lazy loading with Intersection Observer
@@ -73,7 +73,7 @@ All major components now use optimized loading:
 - ✅ Login.jsx - Background carousel images
 
 ### 4. **Backend Optimizations**
-Location: `nguviu-backend/index.js`
+Location: `kangarubackend/index.js`
 
 Added:
 - Long-term caching headers (1 year for images)
@@ -82,7 +82,7 @@ Added:
 - ETag and Last-Modified headers
 
 ### 5. **Vite Build Optimizations**
-Location: `nguviu-frontend/vite.config.mjs`
+Location: `kangarufrontend/vite.config.mjs`
 
 Added:
 - Image minification plugin
@@ -118,14 +118,14 @@ Options:
 ### **Step 2: Install Required Packages**
 
 ```powershell
-cd nguviu-frontend
+cd kangarufrontend
 npm install vite-plugin-imagemin --save-dev
 ```
 
 ### **Step 3: Build for Production**
 
 ```powershell
-cd nguviu-frontend
+cd kangarufrontend
 npm run build
 ```
 

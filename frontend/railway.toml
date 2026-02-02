@@ -1,0 +1,20 @@
+[build]
+builder = "NIXPACKS"
+
+[build.nixpacksConfig]
+# Ensure vite is available in PATH
+packageManager = "npm"
+
+[build.command]
+# Build the Vite app
+command = "npm run build"
+
+[deploy]
+# Start the preview server (vite preview)
+startCommand = "npm start"
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 10
+
+[env]
+# Railway will set PORT automatically
+# Vite preview will use it via npm start

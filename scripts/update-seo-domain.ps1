@@ -18,9 +18,9 @@ if (-not $Domain.StartsWith('http')) {
 }
 
 $files = @(
-    "nguviu-frontend\public\sitemap.xml",
-    "nguviu-frontend\public\robots.txt",
-    "nguviu-frontend\index.html"
+    "kangarufrontend\public\sitemap.xml",
+    "kangarufrontend\public\robots.txt",
+    "kangarufrontend\index.html"
 )
 
 foreach ($file in $files) {

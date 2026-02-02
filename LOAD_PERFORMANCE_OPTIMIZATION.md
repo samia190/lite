@@ -73,7 +73,7 @@
 ## 🚀 How to Test Performance
 
 ### Development Mode:
-1. Run `npm run dev` in nguviu-frontend
+1. Run `npm run dev` in kangarufrontend
 2. Open browser DevTools Console
 3. Reload the page
 4. Check console for performance metrics:
@@ -102,12 +102,12 @@
 
 ## 🔧 Key Files Modified
 
-1. **nguviu-frontend/index.html** - Initial loader with inline CSS
-2. **nguviu-frontend/src/App.jsx** - Optimized loading logic
-3. **nguviu-frontend/src/components/StudentVerification.jsx** - Loader component
-4. **nguviu-frontend/src/utils/lazyLoad.js** - Loader for lazy-loaded components
-5. **nguviu-frontend/src/main.jsx** - Performance monitoring
-6. **nguviu-frontend/vite.config.mjs** - Build optimizations
+1. **kangarufrontend/index.html** - Initial loader with inline CSS
+2. **kangarufrontend/src/App.jsx** - Optimized loading logic
+3. **kangarufrontend/src/components/StudentVerification.jsx** - Loader component
+4. **kangarufrontend/src/utils/lazyLoad.js** - Loader for lazy-loaded components
+5. **kangarufrontend/src/main.jsx** - Performance monitoring
+6. **kangarufrontend/vite.config.mjs** - Build optimizations
 
 ## 📈 Additional Optimization Opportunities
 

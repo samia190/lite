@@ -74,7 +74,7 @@ This guide contains optimizations implemented to achieve **< 2 second loading ti
    
    ```bash
    # Convert images to WebP (run locally then upload)
-   cd nguviu-frontend/public/images/students
+   cd kangarufrontend/public/images/students
    for img in *.JPG; do
      npx sharp-cli -i "$img" -o "${img%.JPG}.webp" -f webp -q 80
    done

@@ -2,26 +2,26 @@
 
 ## ✅ What Has Been Created
 
-Your NGUVIU GIRLS school website is now fully equipped for Google Search Engine visibility!
+Your KANGARU GIRLS school website is now fully equipped for Google Search Engine visibility!
 
 ### Files Created:
 
-1. **nguviu-frontend/public/sitemap.xml** 
+1. **kangarufrontend/public/sitemap.xml** 
    - Complete XML sitemap with all public pages
    - Includes priority levels and update frequencies
    - Ready for Google Search Console submission
 
-2. **nguviu-frontend/public/robots.txt**
+2. **kangarufrontend/public/robots.txt**
    - Search engine crawler instructions
    - Blocks admin/private areas
    - References sitemap location
 
-3. **nguviu-frontend/public/schema.json**
+3. **kangarufrontend/public/schema.json**
    - Structured data for better search understanding
    - School organization information
    - Contact details template
 
-4. **nguviu-frontend/index.html** (Enhanced)
+4. **kangarufrontend/index.html** (Enhanced)
    - SEO meta tags (description, keywords)
    - Open Graph tags for social media sharing
    - Twitter Card tags
@@ -48,11 +48,11 @@ Your NGUVIU GIRLS school website is now fully equipped for Google Search Engine 
 
 ### Step 1: Get Your Render URL ✅
 After deploying to Render, you'll get a URL like:
-- `https://nguviu-school.onrender.com`
+- `https://kangaruschool.onrender.com`
 
 ### Step 2: Update Domain (2 minutes) ✅
 ```powershell
-.\scripts\update-seo-domain.ps1 -Domain "nguviu-school.onrender.com"
+.\scripts\update-seo-domain.ps1 -Domain "kangaruschool.onrender.com"
 ```
 
 ### Step 3: Verify Files (1 minute) ✅
@@ -157,7 +157,7 @@ Visit in your browser:
 ## 🎯 Search Terms You'll Rank For
 
 With this setup, your site will be optimized for:
-- "NGUVIU GIRLS school"
+- "KANGARU GIRLS school"
 - "[Your city] girls school"
 - "girls secondary school [your area]"
 - "school admissions [your area]"

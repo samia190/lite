@@ -1,0 +1,51 @@
+{
+  "@context": "https://schema.org",
+  "@type": "EducationalOrganization",
+  "name": "KANGARU GIRLS SENIOR School",
+  "alternateName": "KANGARU GIRLS",
+  "description": "Excellence in Education - A leading girls' school offering quality education with comprehensive curriculum, dedicated staff, excellent facilities, and strong academic performance.",
+  "url": "https://kangarugirlseniorschool.co.ke",
+  "logo": "https://kangarugirlseniorschool.co.ke/header/logo.PNG",
+  "image": "https://kangarugirlseniorschool.co.ke/header/logo.PNG",
+  "email": "kangarugirls@yahoo.com",
+  "telephone": "+254-113688538",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "kangaru",
+    "addressLocality": "embu",
+    "addressRegion": "embu north",
+    "postalCode": "10001",
+    "addressCountry": "Kenya"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": "0.0000000",
+    "longitude": "0.0000000"
+  },
+  "sameAs": [
+    "https://facebook.com/your-page",
+    "https://twitter.com/your-handle",
+    "https://instagram.com/your-handle"
+  ],
+  "contactPoint": [
+    {
+      "@type": "ContactPoint",
+      "contactType": "Admissions",
+      "email": "kangarugirls@yahoo.com",
+      "telephone": "+254-113688538",
+      "availableLanguage": "English, Kiswahili"
+    },
+    {
+      "@type": "ContactPoint",
+      "contactType": "General Inquiries",
+      "email": "kangarugirls@yahoo.com",
+      "telephone": "+254-113688538",
+      "availableLanguage": "English, Kiswahili"
+    }
+  ],
+  "offers": {
+    "@type": "Offer",
+    "category": "Education",
+    "name": "School Admissions"
+  }
+}

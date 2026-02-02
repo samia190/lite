@@ -1,16 +1,16 @@
 services:
   # Backend API Service
   - type: web
-    name: nguviu-backend
+    name: kangarubackend
     runtime: node
     region: oregon
     plan: free
-    buildCommand: cd nguviu-backend && npm install
-    startCommand: cd nguviu-backend && npm start
+    buildCommand: cd kangarubackend && npm install
+    startCommand: cd kangarubackend && npm start
     # Persistent disk for images/uploads (CRITICAL for performance)
     disk:
-      name: nguviu-data
-      mountPath: /opt/render/project/src/nguviu-backend/public
+      name: kangarudata
+      mountPath: /opt/render/project/src/kangarubackend/public
       sizeGB: 1
     envVars:
       - key: NODE_ENV
@@ -51,12 +51,12 @@ services:
 
   # Frontend Static Site
   - type: web
-    name: nguviu-frontend
+    name: kangarufrontend
     runtime: static
     region: oregon
     plan: free
-    buildCommand: cd nguviu-frontend && npm install && npm run build
-    staticPublishPath: nguviu-frontend/dist
+    buildCommand: cd kangarufrontend && npm install && npm run build
+    staticPublishPath: kangarufrontend/dist
     pullRequestPreviewsEnabled: true
     headers:
       # Security headers

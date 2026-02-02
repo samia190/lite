@@ -13,7 +13,7 @@ Error: Command failed with exit code 127
 ## Solution Applied ✅
 
 ### 1. Moved Vite to Dependencies
-**File:** `nguviu-frontend/package.json`
+**File:** `kangarufrontend/package.json`
 
 Changed from:
 ```json
@@ -34,21 +34,21 @@ To:
 ```
 
 ### 2. Updated Dockerfile
-**File:** `nguviu-frontend/Dockerfile`
+**File:** `kangarufrontend/Dockerfile`
 
 - Multi-stage build now uses `npm ci --only=production`
 - Vite is automatically included since it's in dependencies
 - Production image remains optimized (~200-300 MB)
 
 ### 3. Updated Railway Configuration  
-**File:** `nguviu-frontend/railway.toml`
+**File:** `kangarufrontend/railway.toml`
 
 - Explicit build command: `npm run build`
 - Explicit start command: `npm start`
 - Ensures Railway knows how to build and run the app
 
 ### 4. Created .gitignore Files
-**Files:** `nguviu-backend/.gitignore`, `nguviu-frontend/.gitignore`
+**Files:** `kangarubackend/.gitignore`, `kangarufrontend/.gitignore`
 
 - Ensures `node_modules` never committed to Git
 - Reduces repository size
@@ -62,7 +62,7 @@ Run these commands to verify the fix works:
 
 ```powershell
 # Navigate to frontend
-cd nguviu-frontend
+cd kangarufrontend
 
 # Clean install (simulates Railway)
 rm -r node_modules, dist -Force -ErrorAction SilentlyContinue
@@ -80,7 +80,7 @@ Expected output:
 ✔ vite v5.4.21 building for production...
 ✔ built in 3.45s
 
-> nguviu-frontend@1.1.0 start
+> kangarufrontend@1.1.0 start
 > vite preview --host 0.0.0.0 --port ${PORT:-3000}
 
   ➜  Local:   http://localhost:3000/
@@ -122,7 +122,7 @@ git push origin main
 ### 2. Deploy to Railway
 
 **Backend Service:**
-- Root Directory: `nguviu-backend`
+- Root Directory: `kangarubackend`
 - Environment Variables:
   ```
   MONGO_URI=mongodb+srv://...
@@ -132,7 +132,7 @@ git push origin main
   ```
 
 **Frontend Service:**
-- Root Directory: `nguviu-frontend`
+- Root Directory: `kangarufrontend`
 - Environment Variables:
   ```
   VITE_API_URL=https://your-backend.up.railway.app

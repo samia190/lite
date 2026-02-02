@@ -21,7 +21,7 @@ All image paths like:
 
 Will automatically load from the frontend domain when deployed:
 - **Development**: `http://localhost:5173/images/students/IMG_0778.JPG`
-- **Production**: `https://nguviu-frontend.onrender.com/images/students/IMG_0778.JPG`
+- **Production**: `https://kangarufrontend.onrender.com/images/students/IMG_0778.JPG`
 
 ## 🚀 Deployment Steps
 
@@ -36,12 +36,12 @@ git push origin main
 After Render rebuilds (5-10 minutes):
 
 1. **Test image loading:**
-   - Open: `https://nguviu-frontend.onrender.com/images/students/IMG_0778.JPG`
+   - Open: `https://kangarufrontend.onrender.com/images/students/IMG_0778.JPG`
    - Should load instantly
 
 2. **Check caching:**
    ```bash
-   curl -I https://nguviu-frontend.onrender.com/images/students/IMG_0778.JPG
+   curl -I https://kangarufrontend.onrender.com/images/students/IMG_0778.JPG
    # Should show: Cache-Control: public, max-age=31536000, immutable
    ```
 
@@ -54,7 +54,7 @@ After Render rebuilds (5-10 minutes):
 If still slow, run image optimization:
 
 ```powershell
-cd nguviu-frontend
+cd kangarufrontend
 npm run optimize:images
 git add public/.optimized
 git commit -m "Add optimized WebP images"
@@ -96,7 +96,7 @@ git push
 Run this to list all available images:
 
 ```powershell
-Get-ChildItem "nguviu-frontend\public\images" -Recurse -File | ForEach-Object { $_.FullName.Replace((Get-Location).Path + '\nguviu-frontend\public\', '/').Replace('\', '/') } | Out-File image-paths.txt
+Get-ChildItem "kangarufrontend\public\images" -Recurse -File | ForEach-Object { $_.FullName.Replace((Get-Location).Path + '\kangarufrontend\public\', '/').Replace('\', '/') } | Out-File image-paths.txt
 ```
 
 Then check if your components use the correct paths.
